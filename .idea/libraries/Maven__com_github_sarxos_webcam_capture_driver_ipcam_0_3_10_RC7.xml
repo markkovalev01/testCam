@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.sarxos:webcam-capture-driver-ipcam:0.3.10-RC7">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/sarxos/webcam-capture-driver-ipcam/0.3.10-RC7/webcam-capture-driver-ipcam-0.3.10-RC7.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/sarxos/webcam-capture-driver-ipcam/0.3.10-RC7/webcam-capture-driver-ipcam-0.3.10-RC7-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/sarxos/webcam-capture-driver-ipcam/0.3.10-RC7/webcam-capture-driver-ipcam-0.3.10-RC7-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
