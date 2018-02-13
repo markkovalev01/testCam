@@ -15,14 +15,6 @@ public class Points extends JPanel {
 
         g2d.setColor(Color.red);
 
-//        for (int i = 0; i <= 100000; i++) {
-//            Dimension size = getSize();
-//            int w = size.width ;
-//            int h = size.height;
-//
-//            Random r = new Random();
-//            int x = Math.abs(r.nextInt()) % w;
-//            int y = Math.abs(r.nextInt()) % h;
         for(int i = 0; i < 100; i++){
             Point2D.Double p = new Point2D.Double(0., 0.);
             p.setLocation((double) 14 + i, (double) 20 + i);

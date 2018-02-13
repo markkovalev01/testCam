@@ -15,6 +15,7 @@ public class Point extends WebcamPanel {
 
     public Point(Webcam webcam) {
         super(webcam);
+        setSize(1280, 720);
     }
 
     public void setX(double x) {
@@ -36,22 +37,12 @@ public class Point extends WebcamPanel {
 
         g2d.setColor(Color.red);
         g2d.setBackground(Color.red);
-//        g2d.s
-//        for (int i = 0; i <= 100000; i++) {
-//            Dimension size = getSize();
-//            int w = size.width ;
-//            int h = size.height;
-//
-//            Random r = new Random();
-//            int x = Math.abs(r.nextInt()) % w;
-//            int y = Math.abs(r.nextInt()) % h;
+        g2d.drawLine(0, this.getHeight()/2, getWidth(), getHeight()/2);
+        g2d.drawLine(getWidth()/2, 0, getWidth()/2, getHeight());
         for (int i = 0; i < arr.size(); i++) {
             Point2D.Double p = new Point2D.Double(0., 0.);
-//            p.setLocation((double) 14 + i, (double) 20 + i);
             double[] point = arr.get(i);
-//            Ellipse2D ellipse2D = new Ellipse2D.Double(point[0], point[1], 10, 10);
             g2d.fillOval((int)point[0], (int)point[1], 10, 10);
-//            g2d.draw(ellipse2D);
         }
     }
 

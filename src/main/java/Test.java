@@ -16,10 +16,23 @@ public class Test {
     }
 
     public static void main(String[] args) throws Exception {
-        IpCamDeviceRegistry.register(new IpCamDevice("Lignano", "http://192.168.202.115:800/", IpCamMode.PUSH));
+        IpCamDeviceRegistry.register(new IpCamDevice("Right", "http://192.168.202.115:800/", IpCamMode.PUSH));
+        IpCamDeviceRegistry.register(new IpCamDevice("Left", "http://192.168.202.115:801/", IpCamMode.PUSH));
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Frame frame = new Frame(Webcam.getWebcams().get(0), "Right");
+                    Thread.sleep(1000);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 //        IpCamDeviceRegistry.register(new IpCamDevice("Lignano1", "http://192.168.202.115:801/", IpCamMode.PUSH));
 
-        Frame frame = new Frame(Webcam.getDefault());
+        Frame frame = new Frame(Webcam.getWebcams().get(1), "Left");
 
 //        new Thread(new Runnable() {
 //            boolean work = true;

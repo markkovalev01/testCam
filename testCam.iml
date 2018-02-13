@@ -23,5 +23,6 @@
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" name="Maven: com.github.sarxos:webcam-capture:0.3.11" level="project" />
     <orderEntry type="library" name="Maven: com.nativelibs4java:bridj:0.7.0" level="project" />
+    <orderEntry type="library" name="Imagelibrary_v1_2" level="application" />
   </component>
 </module>

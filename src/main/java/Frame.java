@@ -1,12 +1,14 @@
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 //import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,44 +18,24 @@ public class Frame extends JFrame {
 
     Point webcamPanel;
     FileWriter fw;
+    File file;
+    int i = 0;
 
     ArrayList<double[]> arr = new ArrayList<double[]>();
     int xPrev = 0;
     int yPrev = 0;
 
-    public Frame(final Webcam webcam) throws HeadlessException, IOException {
-        super("frame");
+    public Frame(final Webcam webcam, final String name) throws HeadlessException, IOException {
+        super(name);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //        setSize(800, 600);
-        File file = new File("xy.txt");
+        file = new File(".txt");
         if (!file.exists()) {
             file.createNewFile();
         }
         fw = new FileWriter(file);
 
         setVisible(true);
-//        add(new WebcamPanel().add(new MouseListener() {
-//            public void mouseClicked(MouseEvent e) {
-//
-//            }
-//
-//            public void mousePressed(MouseEvent e) {
-//
-//            }
-//
-//            public void mouseReleased(MouseEvent e) {
-//
-//            }
-//
-//            public void mouseEntered(MouseEvent e) {
-//
-//            }
-//
-//            public void mouseExited(MouseEvent e) {
-//
-//            }
-//        }));
-
         webcamPanel = new Point(webcam);
         webcamPanel.addMouseListener(new MouseListener() {
             public void mouseClicked(final MouseEvent e) {
@@ -76,7 +58,19 @@ public class Frame extends JFrame {
 
             public void mousePressed(MouseEvent e) {
                 try {
-                    fw.write("x: " + getX() + " y: " + getY() + "\n");
+                    file = new File(i + "_" + name + ".png");
+                    if (!file.exists()) {
+                        file.createNewFile();
+
+                    }
+                    i++;
+                    int n = 0;
+                    if (name == "Left") {
+                        n = 1;
+                    }
+                    BufferedImage bi = Webcam.getWebcams().get(n).getImage();
+                    ImageIO.write(bi, "PNG", file);
+                    n=0;
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -99,15 +93,10 @@ public class Frame extends JFrame {
             public void mouseDragged(MouseEvent e) {
                 if (e.getX() != xPrev && e.getY() != yPrev) {
                     double[] coor = {e.getX(), e.getY()};
-//                    arr.add(coor);
                     webcamPanel.addP(coor);
                     System.out.printf(" X = %d Y = %d \n", e.getX(), e.getY());
-//                    webcamPanel.setX(e.getX());
-//                    webcamPanel.setY(e.getY());
-//                    Point2D.Double p = new Point2D.Double(0., 0.);
-//                    p.setLocation((double) e.getX(), (double) e.getY());//                    ;
-//
-                }}
+                }
+            }
 
             public void mouseMoved(MouseEvent e) {
             }
@@ -124,9 +113,7 @@ public class Frame extends JFrame {
         System.out.println("Frame.Frame");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(800, 600);
-//        setLayout(new BorderLayout());
         setBackground(Color.WHITE);
-
 
 
         JPanel panel = new JPanel();
@@ -141,19 +128,11 @@ public class Frame extends JFrame {
 
             public void mousePressed(MouseEvent e) {
                 if (e.getX() != xPrev && e.getY() != yPrev) {
-                    int[] coor = {e.getX(), e.getY()};
-//                    arr.add(coor);
                     System.out.printf("Press X = %d Y = %d \n", e.getX(), e.getY());
                 }
-
             }
 
             public void mouseReleased(MouseEvent e) {
-//                if (e.getX() != xPrev && e.getY() != yPrev) {
-//                    int[] coor = {e.getX(), e.getY()};
-//                    arr.add(coor);
-//                    System.out.printf("X = %d Y = %d ", e.getX(), e.getY());
-//                }
             }
 
             public void mouseEntered(MouseEvent e) {
@@ -167,17 +146,8 @@ public class Frame extends JFrame {
         panel.addMouseMotionListener(new MouseMotionListener() {
             public void mouseDragged(MouseEvent e) {
                 if (e.getX() != xPrev && e.getY() != yPrev) {
-//                    int[] coor = {e.getX(), e.getY()};
-//                    arr.add(coor);
                     System.out.printf(" X = %d Y = %d \n", e.getX(), e.getY());
-//                    Point2D.Double p = new Point2D.Double(0., 0.);
-//                    p.setLocation((double) e.getX(), (double) e.getY());
-//                    ;
-//
                 }
-
-
-
             }
 
             public void mouseMoved(MouseEvent e) {
@@ -190,7 +160,4 @@ public class Frame extends JFrame {
     }
 
 
-//    public static void main(String[] args) {
-//        new Frame();
-//    }
 }
