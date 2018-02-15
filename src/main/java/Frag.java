@@ -7,7 +7,7 @@ public class Frag {
     public static void main(String[] args) throws IOException {
         BufferedImage bi = ImageIO.read(new File("green_red_proc.png"));
         Frag frag = new Frag();
-        frag.makeFrag(bi, 810, 86, 19, 15);
+        frag.makeFrag(bi, 930, 82, 54, 45);
         BufferedImage bi1 = ImageIO.read(new File("frag.png"));
 //        frag.clear(bi1);
     }
@@ -20,10 +20,10 @@ public class Frag {
         int[][] arr = new int[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (bi.getRGB(x + j, y + i) == -16744448) {
-                    System.out.print(1 + "  ");
+                if (bi.getRGB(x + i,y + j ) == -16744448) {
+                    System.out.print(1 + " ");
                 } else {
-                    System.out.print(" " + "  ");
+                    System.out.print(" " + " ");
                 }
                 arr[i][j] = bi.getRGB(x + i, y + j);
             }
@@ -37,7 +37,7 @@ public class Frag {
             }
         }
 
-        File file = new File("frag.png");
+        File file = new File("frag3.png");
         if (!file.exists()) {
             file.createNewFile();
         }
