@@ -5,9 +5,9 @@ import java.io.IOException;
 
 public class Frag {
     public static void main(String[] args) throws IOException {
-        BufferedImage bi = ImageIO.read(new File("green_red_proc.png"));
+        BufferedImage bi = ImageIO.read(new File("1_right.png"));
         Frag frag = new Frag();
-        frag.makeFrag(bi, 930, 82, 54, 45);
+        frag.makeFrag(bi, 814, 380, 15, 17);
         BufferedImage bi1 = ImageIO.read(new File("frag.png"));
 //        frag.clear(bi1);
     }
@@ -37,7 +37,7 @@ public class Frag {
             }
         }
 
-        File file = new File("frag3.png");
+        File file = new File("frag6.png");
         if (!file.exists()) {
             file.createNewFile();
         }

@@ -63,7 +63,7 @@ public class MatchFrag {
         System.out.println(bi.getHeight());
         for (int i = 0; i < bi.getHeight(); i++) {
             for (int j = 0; j < bi.getWidth(); j++) {
-//                System.out.println(i);
+//                System.out.println(i + " " + j);
                 compareFrag(j, i, bi);
             }
         }
@@ -111,13 +111,14 @@ public class MatchFrag {
 //                if ((j + x) < bi.getWidth() && (y + i) < bi.getHeight() && frag[i][j] == bi.getRGB(j + x, y + i)) {
 //                    buffMatch++;
 //                }
-                if ((y + j) < bi.getWidth() && (i + x) < bi.getHeight() && frag[i][j] != -1 && bi.getRGB(y + j, i + x) != -1) {
-//                    (y + i) < bi.getWidth() && (j + x) < bi.getHeight() &&
-//                    System.out.println(y+j);
-                    buffMatch++;
-                    continue;
-                }
-                if ((y + j) < bi.getWidth() && (i + x) < bi.getHeight() && frag[i][j] == bi.getRGB(y + j, i + x)) {
+//                if ((y + j) < bi.getWidth() && (i + x) < bi.getHeight() && frag[i][j] != -1 && bi.getRGB(y + j, i + x) != -1) {
+////                    (y + i) < bi.getWidth() && (j + x) < bi.getHeight() &&
+////                    System.out.println(y+j);
+//                    buffMatch++;
+//                    continue;
+//                }
+                if ((y + j) < bi.getWidth() && (i + x) <bi.getHeight() && Math.abs(frag[i][j]) - Math.abs(bi.getRGB(y + j, i + x)) < -1000000) {
+//                    frag[i][j] == bi.getRGB(y + j, i + x)
 //                    (y + i) < bi.getWidth() && (j + x) < bi.getHeight() &&
 //                    (y + i) < bi.getWidth() && (j + x) < bi.getHeight() &&
 //                    System.out.println(y+j);
@@ -126,8 +127,9 @@ public class MatchFrag {
             }
         }
 
+        System.out.println(buffMatch);
 
-        if (buffMatch >= 2000) {
+        if (buffMatch >= 250) {
             match.add(buffMatch);
             xy.add(new Integer[]{x, y});
 //            System.out.println(match);
@@ -137,9 +139,9 @@ public class MatchFrag {
 
 
     public static void main(String[] args) throws IOException {
-        MatchFrag mf = new MatchFrag(new File("frag3.png"));
+        MatchFrag mf = new MatchFrag(new File("frag6.png"));
 //        MatchFrag mf = new MatchFrag();
-        mf.findMatch(new File("green_red_proc.png"));
+        mf.findMatch(new File("1_left.png"));
 
         System.out.println("end");
 //        System.out.println(mf.x + " " + mf.y);
