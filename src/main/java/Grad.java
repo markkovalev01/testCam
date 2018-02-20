@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -47,8 +48,8 @@ public class Grad {
     private void setDirection(int i, int j) {
         int argb1 = bi.getRGB(j, i);
         int grad = (argb1 >> 16) & 0xff;
-        int buffI = 0;
-        int buffJ = 0;
+        int buffI = i;
+        int buffJ = j;
         for (int d = i + 1; d > 0 && d > i - 1; d--) {
 
             if (j + 1 >= bi.getWidth() && i + 1 >= bi.getHeight()) {
@@ -122,47 +123,55 @@ public class Grad {
         }
         int a = (argb1 >> 16) & 0xff;
         if (grad == a) {
-            bi.setRGB(j, i, -1);
+            bi.setRGB(j, i, new Color(255,255,255).getRGB());
+//            bi.setRGB(j, i, 0xffffff);
             return;
         }
 
         if (buffI == i + 1 && buffJ == j + 1) {
-            bi.setRGB(j, i, -16776135);
+            bi.setRGB(j, i, new Color(0,0,135).getRGB());
 //            System.out.println(135);
             return;
         }
         if (buffI == i && buffJ == j + 1) {
-            bi.setRGB(j, i, -16776090);
+            bi.setRGB(j, i, new Color(0,0,90).getRGB());
+//            bi.setRGB(j, i, -16776090);
 //            System.out.println(90);
             return;
         }
         if (buffI == i - 1 && buffJ == j + 1) {
-            bi.setRGB(j, i, -16776045);
+            bi.setRGB(j, i, new Color(0,0,45).getRGB());
+//            bi.setRGB(j, i, -16776045);
 //            System.out.println(45);
             return;
         }
         if (buffI == i - 1 && buffJ == j) {
-            bi.setRGB(j, i, -16776000);
+            bi.setRGB(j, i, new Color(0,0,0).getRGB());
+//            bi.setRGB(j, i, -16776000);
 //            System.out.println(0);
             return;
         }
         if (buffI == i - 1 && buffJ == j - 1) {
-            bi.setRGB(j, i, -16776315);
+            bi.setRGB(j, i, new Color(0,60,255).getRGB());
+//            bi.setRGB(j, i, -16776315);
 //            System.out.println(315);
             return;
         }
         if (buffI == i && buffJ == j - 1) {
-            bi.setRGB(j, i, -16776270);
+            bi.setRGB(j, i, new Color(0,15,255).getRGB());
+//            bi.setRGB(j, i, -16776270);
 //            System.out.println(270);
             return;
         }
         if (buffI == i + 1 && buffJ == j - 1) {
-            bi.setRGB(j, i, -16776225);
+            bi.setRGB(j, i, new Color(0,0,225).getRGB());
+//            bi.setRGB(j, i, -16776225);
 //            System.out.println(225);
             return;
         }
         if (buffI == i + 1 && buffJ == j) {
-            bi.setRGB(j, i, -16776180);
+            bi.setRGB(j, i, new Color(0,0,180).getRGB());
+//            bi.setRGB(j, i, -16776180);
 //            System.out.println(180);
             return;
         }
@@ -171,45 +180,50 @@ public class Grad {
 
 
     public static void main(String[] args) throws IOException {
-        BufferedImage bi = ImageIO.read(new File("frag4.png"));
+        BufferedImage bi = ImageIO.read(new File("frag6.png"));
         Grad grad = new Grad(bi);
-        grad.gradGray();
+//        grad.gradGray();
         grad.gradientMap();
         BufferedImage bi1 = ImageIO.read(new File("grad_map_image.png"));
         for (int i = 0; i < bi1.getHeight(); i++) {
             for (int j = 0; j < bi1.getWidth(); j++) {
-                if (bi1.getRGB(j, i) % 1000 == -270) {
-                    bi1.setRGB(j, i, -1);
+                int argb = bi.getRGB(j, i);
+                int alpha = (argb >> 24) & 0xff;
+                int red = (argb >> 16) & 0xff;
+                int green = (argb >> 8) & 0xff;
+                int blue = (argb) & 0xff;
+                if (red + green + blue == 270) {
+                    bi1.setRGB(j, i, new Color(255,0,0).getRGB());
                     continue;
                 }
-                if (bi1.getRGB(j, i) % 1000 == -135) {
-                    bi1.setRGB(j, i, 0x000000);
-                    continue;
-                }
-                if (bi1.getRGB(j, i) % 1000 == -90) {
-                    bi1.setRGB(j, i, 0xff0000);
-                    continue;
-                }
-                if (bi1.getRGB(j, i) % 1000 == -45) {
-                    bi1.setRGB(j, i, 0xffff00);
-                    continue;
-                }
-                if (bi1.getRGB(j, i) % 1000 == 0) {
-                    bi1.setRGB(j, i, 0x008000);
-                    continue;
-                }
-                if (bi1.getRGB(j, i) % 1000 == 315) {
-                    bi1.setRGB(j, i, 0x8b00ff);
-                    continue;
-                }
-                if (bi1.getRGB(j, i) % 1000 == 225) {
-                    bi1.setRGB(j, i, 0xffa500);
-                    continue;
-                }
-                if (bi1.getRGB(j, i) % 1000 == 180) {
-                    bi1.setRGB(j, i, 0x42aaff);
-                    continue;
-                }
+//                if (bi1.getRGB(j, i) % 1000 == -135) {
+//                    bi1.setRGB(j, i, 0x000000);
+//                    continue;
+//                }
+//                if (bi1.getRGB(j, i) % 1000 == -90) {
+//                    bi1.setRGB(j, i, 0xff0000);
+//                    continue;
+//                }
+//                if (bi1.getRGB(j, i) % 1000 == -45) {
+//                    bi1.setRGB(j, i, 0xffff00);
+//                    continue;
+//                }
+//                if (bi1.getRGB(j, i) % 1000 == 0) {
+//                    bi1.setRGB(j, i, 0x008000);
+//                    continue;
+//                }
+//                if (bi1.getRGB(j, i) % 1000 == 315) {
+//                    bi1.setRGB(j, i, 0x8b00ff);
+//                    continue;
+//                }
+//                if (bi1.getRGB(j, i) % 1000 == 225) {
+//                    bi1.setRGB(j, i, 0xffa500);
+//                    continue;
+//                }
+//                if (bi1.getRGB(j, i) % 1000 == 180) {
+//                    bi1.setRGB(j, i, 0x42aaff);
+//                    continue;
+//                }
 //                int a = bi.getRGB(j, i);
 //                    System.out.println(bi1.getRGB(j, i) % 1000 + "  ");
             }

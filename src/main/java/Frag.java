@@ -5,9 +5,9 @@ import java.io.IOException;
 
 public class Frag {
     public static void main(String[] args) throws IOException {
-        BufferedImage bi = ImageIO.read(new File("1_right.png"));
+        BufferedImage bi = ImageIO.read(new File("gray_image.png"));
         Frag frag = new Frag();
-        frag.makeFrag(bi, 814, 380, 15, 17);
+        frag.makeFrag(bi, 735, 358, 370, 292);
         BufferedImage bi1 = ImageIO.read(new File("frag.png"));
 //        frag.clear(bi1);
     }
