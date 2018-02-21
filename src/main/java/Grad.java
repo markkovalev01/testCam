@@ -24,7 +24,7 @@ public class Grad {
                 bi.setRGB(j, i, (red << 16) | (green << 8) | blue);
             }
         }
-        File file = new File("gray_image2.png");
+        File file = new File("gray_image3.png");
         if (!file.exists()) {
             file.createNewFile();
         }
@@ -42,7 +42,7 @@ public class Grad {
 
 //        setDirection(61, 172);
 
-        File file = new File("grad_map_image1.png");
+        File file = new File("grad_map_image2.png");
         if (!file.exists()) {
             file.createNewFile();
         }
@@ -195,7 +195,7 @@ public class Grad {
 
 
     public static void main(String[] args) throws IOException {
-        BufferedImage bi = ImageIO.read(new File("1_Right.png"));
+        BufferedImage bi = ImageIO.read(new File("1_Left.png"));
         Grad grad = new Grad(bi);
 //        grad.gradGray();
         grad.gradientMap();

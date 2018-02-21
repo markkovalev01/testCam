@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -63,7 +64,7 @@ public class MatchFrag {
         System.out.println(bi.getHeight());
         for (int i = 0; i < bi.getHeight(); i++) {
             for (int j = 0; j < bi.getWidth(); j++) {
-                System.out.println(i + " " + j);
+//                System.out.println(i + " " + j);
                 compareFrag(j, i, bi);
             }
         }
@@ -73,7 +74,7 @@ public class MatchFrag {
         }
         for (int k = 0; k < xy.size(); k++) {
 //            System.out.println(xy.get(k)[0]+" "+ xy.get(k)[1]);
-            bi.setRGB(xy.get(k)[1], xy.get(k)[0], 0x0000ff);
+            bi.setRGB(xy.get(k)[1], xy.get(k)[0], new Color(250,0,0).getRGB());
         }
         ImageIO.write(bi, "png", res);
     }
@@ -82,7 +83,7 @@ public class MatchFrag {
         int buffMatch = 0;
         int width = frag[0].length;
         int height = frag.length;
-//        System.out.println(x + " " + y);
+        System.out.println(x + " " + y);
 //        if ((x + frag.length) >= bi.getHeight()) {
 //            height = y + frag.length - bi.getHeight();
 ////            System.out.println("yes");
@@ -128,9 +129,9 @@ public class MatchFrag {
             }
         }
 
-        System.out.println(buffMatch);
+//        System.out.println(buffMatch);
 
-        if (buffMatch >= 105000) {
+        if (buffMatch >= 320) {
             match.add(buffMatch);
             xy.add(new Integer[]{x, y});
 //            System.out.println(match);
@@ -140,9 +141,9 @@ public class MatchFrag {
 
 
     public static void main(String[] args) throws IOException {
-        MatchFrag mf = new MatchFrag(new File("grad_map_image.png"));
+        MatchFrag mf = new MatchFrag(new File("frag7.png"));
 //        MatchFrag mf = new MatchFrag();
-        mf.findMatch(new File("grad_map_image1.png"));
+        mf.findMatch(new File("grad_map_image2.png"));
 
         System.out.println("end");
 //        System.out.println(mf.x + " " + mf.y);
