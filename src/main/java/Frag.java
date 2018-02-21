@@ -7,7 +7,7 @@ public class Frag {
     public static void main(String[] args) throws IOException {
         BufferedImage bi = ImageIO.read(new File("grad_map_image1.png"));
         Frag frag = new Frag();
-        frag.makeFrag(bi, 809, 371, 21, 37);
+        frag.makeFrag(bi, 809, 370, 23, 37);
         BufferedImage bi1 = ImageIO.read(new File("frag.png"));
 //        frag.clear(bi1);
     }
@@ -37,7 +37,7 @@ public class Frag {
             }
         }
 
-        File file = new File("frag7.png");
+        File file = new File("frag8.png");
         if (!file.exists()) {
             file.createNewFile();
         }

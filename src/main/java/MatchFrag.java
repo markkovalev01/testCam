@@ -24,7 +24,12 @@ public class MatchFrag {
         frag = new int[bi.getHeight()][bi.getWidth()];
         for (int i = 0; i < bi.getHeight(); i++) {
             for (int j = 0; j < bi.getWidth(); j++) {
-                frag[i][j] = bi.getRGB(j, i);
+                int argb = bi.getRGB(j, i);
+                int alpha = (argb >> 24) & 0xff;
+                int red = (argb >> 16) & 0xff;
+                int green = (argb >> 8) & 0xff;
+                int blue = (argb) & 0xff;
+                frag[i][j] = red + green + blue;
                 if (frag[i][j] != -1) {
                     System.out.print(1 + " ");
                     continue;
@@ -74,7 +79,7 @@ public class MatchFrag {
         }
         for (int k = 0; k < xy.size(); k++) {
 //            System.out.println(xy.get(k)[0]+" "+ xy.get(k)[1]);
-            bi.setRGB(xy.get(k)[1], xy.get(k)[0], new Color(250,0,0).getRGB());
+            bi.setRGB(xy.get(k)[1], xy.get(k)[0], new Color(250, 0, 0).getRGB());
         }
         ImageIO.write(bi, "png", res);
     }
@@ -83,7 +88,7 @@ public class MatchFrag {
         int buffMatch = 0;
         int width = frag[0].length;
         int height = frag.length;
-        System.out.println(x + " " + y);
+//        System.out.println(x + " " + y);
 //        if ((x + frag.length) >= bi.getHeight()) {
 //            height = y + frag.length - bi.getHeight();
 ////            System.out.println("yes");
@@ -118,20 +123,34 @@ public class MatchFrag {
 //                    buffMatch++;
 //                    continue;
 //                }
-                if ((y + j) < bi.getWidth() && (i + x) <bi.getHeight() && frag[i][j] == bi.getRGB(y + j, i + x)) {
+                if ((y + j) < bi.getWidth() && (i + x) < bi.getHeight()) {
+
+                    int argb = bi.getRGB(j + y, i + x);
+                    int alpha = (argb >> 24) & 0xff;
+                    int red = (argb >> 16) & 0xff;
+                    int green = (argb >> 8) & 0xff;
+                    int blue = (argb) & 0xff;
+                    int rgb = red + green + blue;
+                    if (rgb==frag[i][j]){
+                        buffMatch++;
+                    }
+
 //                     Math.abs(frag[i][j]) - Math.abs(bi.getRGB(y + j, i + x)) < -1000000
 //                    frag[i][j] == bi.getRGB(y + j, i + x)
 //                    (y + i) < bi.getWidth() && (j + x) < bi.getHeight() &&
 //                    (y + i) < bi.getWidth() && (j + x) < bi.getHeight() &&
 //                    System.out.println(y+j);
-                    buffMatch++;
+
                 }
             }
         }
 
 //        System.out.println(buffMatch);
+        if(y==809 && x==370){
+            System.out.println("buffMatch " + buffMatch);
+        }
 
-        if (buffMatch >= 320) {
+        if (buffMatch >= 319) {
             match.add(buffMatch);
             xy.add(new Integer[]{x, y});
 //            System.out.println(match);
@@ -141,7 +160,7 @@ public class MatchFrag {
 
 
     public static void main(String[] args) throws IOException {
-        MatchFrag mf = new MatchFrag(new File("frag7.png"));
+        MatchFrag mf = new MatchFrag(new File("frag8.png"));
 //        MatchFrag mf = new MatchFrag();
         mf.findMatch(new File("grad_map_image2.png"));
 
