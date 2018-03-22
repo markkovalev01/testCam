@@ -74,7 +74,7 @@ public class MatchFrag {
         }
         for (int k = 0; k < xy.size(); k++) {
 //            System.out.println(xy.get(k)[0]+" "+ xy.get(k)[1]);
-            bi.setRGB(xy.get(k)[1], xy.get(k)[0], new Color(250,0,0).getRGB());
+            bi.setRGB(xy.get(k)[1], xy.get(k)[0], new Color(250, 0, 0).getRGB());
         }
         ImageIO.write(bi, "png", res);
     }
@@ -118,7 +118,7 @@ public class MatchFrag {
 //                    buffMatch++;
 //                    continue;
 //                }
-                if ((y + j) < bi.getWidth() && (i + x) <bi.getHeight() && frag[i][j] == bi.getRGB(y + j, i + x)) {
+                if ((y + j) < bi.getWidth() && (i + x) < bi.getHeight() && frag[i][j] == bi.getRGB(y + j, i + x)) {
 //                     Math.abs(frag[i][j]) - Math.abs(bi.getRGB(y + j, i + x)) < -1000000
 //                    frag[i][j] == bi.getRGB(y + j, i + x)
 //                    (y + i) < bi.getWidth() && (j + x) < bi.getHeight() &&
@@ -139,12 +139,67 @@ public class MatchFrag {
 
     }
 
+    public void findMatchHOG(File file) throws IOException {
+        BufferedImage bi = ImageIO.read(file);
+        int buffMatch = 0;
+        for (int i = 0; i < bi.getHeight(); i += 16) {
+            for (int j = 0; j < bi.getWidth(); j += 16) {
+                compareFragHOG(i, j, bi);
+            }
+        }
+        File res = new File("findFragHOG.png");
+        if (!res.exists()) {
+            file.createNewFile();
+        }
+        for (int k = 0; k < xy.size(); k++) {
+//            System.out.println(xy.get(k)[0]+" "+ xy.get(k)[1]);
+            bi.setRGB(xy.get(k)[1], xy.get(k)[0], new Color(250, 0, 0).getRGB());
+        }
+        ImageIO.write(bi, "png", res);
+
+    }
+
+    private void compareFragHOG(int x, int y, BufferedImage bi) {
+        int width = frag[0].length;
+        int height = frag.length;
+        int buffMatch = 0;
+
+        for (int i = 0; i < height; i += 16) {
+            for (int j = 0; j < width; j += 16) {
+                int argb = bi.getRGB(j, i);
+                int alpha = (argb >> 24) & 0xff;
+                int red = (argb >> 16) & 0xff;
+                int green = (argb >> 8) & 0xff;
+                int blue = (argb) & 0xff;
+//                System.out.println("bi"+" "+red +" "+ green +" "+ blue + " " + alpha);
+//                System.out.println();
+                int argb1 = frag[i][j];
+                int alpha1 = (argb >> 24) & 0xff;
+                int red1 = (argb >> 16) & 0xff;
+                int green1 = (argb >> 8) & 0xff;
+                int blue1 = (argb) & 0xff;
+//                System.out.println(red1 +" "+ green1 +" "+ blue1);
+//                System.out.println();
+                if (y + j < bi.getWidth() && i + x < bi.getHeight() && (red + green + blue) == (red1 + green1 + blue1)) {
+//                    System.out.println("yes");
+                    buffMatch++;
+                }
+            }
+        }
+        System.out.println(buffMatch);
+        if (buffMatch >= 15) {
+            match.add(buffMatch);
+            xy.add(new Integer[]{x, y});
+//            System.out.println(match);
+        }
+    }
+
 
     public static void main(String[] args) throws IOException {
-        MatchFrag mf = new MatchFrag(new File("frag7.png"));
+        MatchFrag mf = new MatchFrag(new File("frag10.png"));
 //        MatchFrag mf = new MatchFrag();
-        mf.findMatch(new File("grad_map_image2.png"));
-
+//        mf.findMatch(new File("grad_map_image2.png"));
+mf.findMatchHOG(new File("general_map_image1.png"));
         System.out.println("end");
 //        System.out.println(mf.x + " " + mf.y);
 

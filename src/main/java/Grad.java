@@ -47,6 +47,7 @@ public class Grad {
             file.createNewFile();
         }
         ImageIO.write(biN, "png", file);
+        bi = biN;
     }
 
     private void setDirection(int i, int j, BufferedImage biN) {
@@ -194,11 +195,123 @@ public class Grad {
     }
 
 
+    public void generalMap() throws IOException {
+        for (int i = 0; i < bi.getHeight(); i += 16) {
+            for (int j = 0; j < bi.getWidth(); j += 16) {
+                mainDirection(i, j);
+            }
+        }
+        File file = new File("general_map_image2.png");
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        ImageIO.write(bi, "png", file);
+    }
+
+    private void mainDirection(int i, int j) {
+        int[] direct = new int[9];
+
+        for (int k = i; k < i + 16; k++) {
+            for (int c = j; c < j + 16; c++) {
+                int argb = bi.getRGB(c, k);
+                int alpha = (argb >> 24) & 0xff;
+                int red = (argb >> 16) & 0xff;
+                int green = (argb >> 8) & 0xff;
+                int blue = (argb) & 0xff;
+                int rgb = red + green + blue;
+//                System.out.println(rgb);
+                if (rgb == 765) {
+                    direct[0]++;
+                }
+                if (rgb == 0) {
+                    direct[1]++;
+                }
+                if (rgb == 45) {
+                    direct[2]++;
+                }
+                if (rgb == 90) {
+                    direct[3]++;
+                }
+                if (rgb == 135) {
+                    direct[4]++;
+                }
+                if (rgb == 180) {
+                    direct[5]++;
+                }
+                if (rgb == 225) {
+                    direct[6]++;
+                }
+                if (rgb == 270) {
+                    direct[7]++;
+                }
+                if (rgb == 315) {
+                    direct[8]++;
+                }
+            }
+        }
+
+        int max = 0;
+        int kk = 0;
+        for (int k = 0; k < direct.length; k++) {
+//            System.out.println(direct[k]);
+            if (direct[k] > max) {
+                max = direct[k];
+                kk = k;
+            }
+        }
+
+        for (int k = i; k < i + 16; k++) {
+            for (int c = j; c < j + 16; c++) {
+//                System.out.println(max);
+//                if (max == 765) {
+//                    bi.setRGB(c, k, new Color(255, 255, 255).getRGB());
+//                    continue;
+//                }
+//                if (max > 255) {
+//                    bi.setRGB(c, k, new Color(0, max - 255, 255).getRGB());
+//                    continue;
+//                }
+//                bi.setRGB(c, k, new Color(0, 0, max).getRGB());
+
+                if (kk == 0) {
+                    bi.setRGB(c, k, new Color(255, 255, 255).getRGB());
+                }
+                if (kk == 1) {
+                    bi.setRGB(c, k, new Color(0, 0, 0).getRGB());
+                }
+                if (kk == 2) {
+                    bi.setRGB(c, k, new Color(0, 0, 45).getRGB());
+                }
+                if (kk == 3) {
+                    bi.setRGB(c, k, new Color(0, 0, 90).getRGB());
+                }
+                if (kk == 4) {
+                    bi.setRGB(c, k, new Color(0, 0, 135).getRGB());
+                }
+                if (kk == 5) {
+                    bi.setRGB(c, k, new Color(0, 0, 180).getRGB());
+                }
+                if (kk == 6) {
+                    bi.setRGB(c, k, new Color(0, 0, 225).getRGB());
+                }
+                if (kk == 7) {
+                    bi.setRGB(c, k, new Color(0, 15, 255).getRGB());
+                }
+                if (kk == 8) {
+                    bi.setRGB(c, k, new Color(0, 60, 255).getRGB());
+                }
+            }
+        }
+
+    }
+
+
     public static void main(String[] args) throws IOException {
-        BufferedImage bi = ImageIO.read(new File("1_Left.png"));
+        BufferedImage bi = ImageIO.read(new File("grad_map_image2.png"));
         Grad grad = new Grad(bi);
 //        grad.gradGray();
-        grad.gradientMap();
+//        grad.gradientMap();
+        grad.generalMap();
 //        BufferedImage bi1 = ImageIO.read(new File("grad_map_image1.png"));
 //        for (int i = 0; i < bi1.getHeight(); i++) {
 //            for (int j = 0; j < bi1.getWidth(); j++) {
