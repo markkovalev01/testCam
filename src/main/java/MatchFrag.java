@@ -144,6 +144,7 @@ public class MatchFrag {
         int buffMatch = 0;
         for (int i = 0; i < bi.getHeight(); i += 16) {
             for (int j = 0; j < bi.getWidth(); j += 16) {
+
                 compareFragHOG(i, j, bi);
             }
         }
@@ -164,42 +165,45 @@ public class MatchFrag {
         int height = frag.length;
         int buffMatch = 0;
 
-        for (int i = 0; i < height; i += 16) {
-            for (int j = 0; j < width; j += 16) {
+        for (int i = 0; i < height; i += 15) {
+            for (int j = 0; j < width; j += 15) {
                 int argb = bi.getRGB(j, i);
                 int alpha = (argb >> 24) & 0xff;
                 int red = (argb >> 16) & 0xff;
                 int green = (argb >> 8) & 0xff;
                 int blue = (argb) & 0xff;
-//                System.out.println("bi"+" "+red +" "+ green +" "+ blue + " " + alpha);
-//                System.out.println();
+                if((red + green + blue)!=0){
+                System.out.println("bi"+" "+red +" "+ green +" "+ blue + " " + alpha);}
+////                System.out.println();
                 int argb1 = frag[i][j];
-                int alpha1 = (argb >> 24) & 0xff;
-                int red1 = (argb >> 16) & 0xff;
-                int green1 = (argb >> 8) & 0xff;
-                int blue1 = (argb) & 0xff;
+                int alpha1 = (argb1 >> 24) & 0xff;
+                int red1 = (argb1 >> 16) & 0xff;
+                int green1 = (argb1 >> 8) & 0xff;
+                int blue1 = (argb1) & 0xff;
 //                System.out.println(red1 +" "+ green1 +" "+ blue1);
 //                System.out.println();
-                if (y + j < bi.getWidth() && i + x < bi.getHeight() && (red + green + blue) == (red1 + green1 + blue1)) {
+//                (red + green + blue) == (red1 + green1 + blue1)
+                if (y + j < bi.getWidth() && i + x < bi.getHeight() && (red + green + blue) == (red1 + green1 + blue1) && bi.getRGB(j, i) != new Color(0, 0, 0).getRGB() && bi.getRGB(j, i) != new Color(0, 0, 45).getRGB()) {
 //                    System.out.println("yes");
                     buffMatch++;
                 }
             }
         }
-        System.out.println(buffMatch);
-        if (buffMatch >= 15) {
+//        System.out.println(buffMatch);
+        if (buffMatch >= 1) {
             match.add(buffMatch);
             xy.add(new Integer[]{x, y});
-//            System.out.println(match);
+            System.out.println(match);
         }
     }
 
 
     public static void main(String[] args) throws IOException {
-        MatchFrag mf = new MatchFrag(new File("frag10.png"));
+        MatchFrag mf = new MatchFrag(new File("frag13.png"));
 //        MatchFrag mf = new MatchFrag();
 //        mf.findMatch(new File("grad_map_image2.png"));
-mf.findMatchHOG(new File("general_map_image1.png"));
+//        mf.findMatchHOG(new File("general_map_image1.png"));
+        mf.findMatchHOG(new File("fragHOG.png"));
         System.out.println("end");
 //        System.out.println(mf.x + " " + mf.y);
 
