@@ -147,13 +147,13 @@ public class MatchFrag {
                 compareFragHOG(i, j, bi);
             }
         }
-        File res = new File("findFragHOG.png");
+        File res = new File("findFragHOG2.png");
         if (!res.exists()) {
             file.createNewFile();
         }
         for (int k = 0; k < xy.size(); k++) {
 //            System.out.println(xy.get(k)[0]+" "+ xy.get(k)[1]);
-            bi.setRGB(xy.get(k)[1], xy.get(k)[0], new Color(250, 0, 0).getRGB());
+            bi.setRGB(xy.get(k)[1], xy.get(k)[0], new Color(250, 250, 0).getRGB());
         }
         ImageIO.write(bi, "png", res);
 
@@ -188,7 +188,7 @@ public class MatchFrag {
             }
         }
         System.out.println(buffMatch);
-        if (buffMatch >= 53) {
+        if (buffMatch >= 72) {
             match.add(buffMatch);
             xy.add(new Integer[]{x, y});
 //            System.out.println(match);
@@ -197,11 +197,11 @@ public class MatchFrag {
 
 
     public static void main(String[] args) throws IOException {
-        MatchFrag mf = new MatchFrag(new File("frag11.png"));
+        MatchFrag mf = new MatchFrag(new File("frag13.png"));
 //        MatchFrag mf = new MatchFrag();
 //        mf.findMatch(new File("grad_map_image2.png"));
 //        mf.findMatchHOG(new File("general_map_image1.png"));
-        mf.findMatchHOG(new File("general_map_image1.png"));
+        mf.findMatchHOG(new File("findFragHOG1.png"));
         System.out.println("end");
 //        System.out.println(mf.x + " " + mf.y);
 
