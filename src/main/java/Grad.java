@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Grad {
     BufferedImage bi;
@@ -32,13 +34,45 @@ public class Grad {
     }
 
     public void gradientMap() throws IOException {
-        BufferedImage biN = new BufferedImage(bi.getWidth(), bi.getHeight(), BufferedImage.TYPE_INT_ARGB);
+       final BufferedImage biN = new BufferedImage(bi.getWidth(), bi.getHeight(), BufferedImage.TYPE_INT_ARGB);
 //        System.out.println(bi.getHeight() + " " + bi.getWidth());
-        for (int i = 0; i < bi.getHeight(); i++) {
-            for (int j = 0; j < bi.getWidth(); j++) {
+//        for (int i = 0; i < bi.getHeight(); i++) {
+//            for (int j = 0; j < bi.getWidth(); j++) {
+//                setDirection(i, j, biN);
+//            }
+//        }
+
+        new Thread(new Runnable() {
+            public void run() {
+                for (int i = 0; i < bi.getHeight(); i++) {
+            for (int j = 0; j < bi.getWidth()/2; j++) {
                 setDirection(i, j, biN);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
+            }
+        }).start();
+        new Thread(new Runnable() {
+            public void run() {
+                for (int i = bi.getHeight(); i < bi.getHeight(); i++) {
+                    for (int j = bi.getWidth()/2; j < bi.getWidth(); j++) {
+                        setDirection(i, j, biN);
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
+
+        ReentrantLock locker = new ReentrantLock();
+        Condition condition = locker.newCondition();
 
 //        setDirection(61, 172);
 
