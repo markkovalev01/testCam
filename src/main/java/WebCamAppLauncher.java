@@ -1,8 +1,15 @@
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.github.sarxos.webcam.Webcam;
 
+import com.github.sarxos.webcam.ds.ipcam.IpCamDevice;
+import com.github.sarxos.webcam.ds.ipcam.IpCamDeviceRegistry;
+import com.github.sarxos.webcam.ds.ipcam.IpCamDriver;
+import com.github.sarxos.webcam.ds.ipcam.IpCamMode;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -28,6 +35,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+
 
 /**
  * This example demonstrates how to use Webcam Capture API in a JavaFX application.
@@ -35,6 +44,18 @@ import javafx.stage.Stage;
  * @author Rakesh Bhatt (rakeshbhatt10)
  */
 public class WebCamAppLauncher extends Application {
+
+    static {
+        Webcam.setDriver(new IpCamDriver());
+//        try {
+//            IpCamDeviceRegistry.register(new IpCamDevice("Right", "http://192.168.202.115:800/", IpCamMode.PUSH));
+//            IpCamDeviceRegistry.register(new IpCamDevice("Left", "http://192.168.202.115:801/", IpCamMode.PUSH));
+//            IpCamDeviceRegistry.register(new IpCamDevice("Left", "https://www.earthcam.com/ts/?cam=tsrobo3", IpCamMode.PUSH));
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+
+    }
 
     private class WebCamInfo {
 
@@ -78,7 +99,7 @@ public class WebCamAppLauncher extends Application {
     private Button btnCameraDispose;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
 
         primaryStage.setTitle("Connecting Camera Device Using Webcam Capture API");
 
@@ -90,8 +111,10 @@ public class WebCamAppLauncher extends Application {
         topPane.setPrefHeight(40);
         root.setTop(topPane);
         webCamPane = new BorderPane();
+        BufferedImage bi = ImageIO.read(new File("10_right.png"));
+        Image image = new Image(new File("10_right.png").toURI().toURL().toString());
         webCamPane.setStyle("-fx-background-color: #ccc;");
-        imgWebCamCapturedImage = new ImageView();
+        imgWebCamCapturedImage = new ImageView(image);
         webCamPane.setCenter(imgWebCamCapturedImage);
         root.setCenter(webCamPane);
         createTopPanel();
