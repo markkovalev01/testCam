@@ -7,7 +7,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Grad {
-    BufferedImage bi;
+     BufferedImage bi;
 
     Grad(BufferedImage bi) {
         this.bi = bi;
@@ -26,65 +26,84 @@ public class Grad {
                 bi.setRGB(j, i, (red << 16) | (green << 8) | blue);
             }
         }
-        File file = new File("gray_image5.png");
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-        ImageIO.write(bi, "png", file);
+//        File file = new File("gray_image5.png");
+//        if (!file.exists()) {
+//            file.createNewFile();
+//        }
+//        ImageIO.write(bi, "png", file);
     }
 
     public void gradientMap() throws IOException {
-       final BufferedImage biN = new BufferedImage(bi.getWidth(), bi.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        final BufferedImage biN = new BufferedImage(bi.getWidth(), bi.getHeight(), BufferedImage.TYPE_INT_ARGB);
 //        System.out.println(bi.getHeight() + " " + bi.getWidth());
-//        for (int i = 0; i < bi.getHeight(); i++) {
-//            for (int j = 0; j < bi.getWidth(); j++) {
-//                setDirection(i, j, biN);
-//            }
-//        }
-
-        new Thread(new Runnable() {
-            public void run() {
-                for (int i = 0; i < bi.getHeight(); i++) {
-            for (int j = 0; j < bi.getWidth()/2; j++) {
+        for (int i = 0; i < bi.getHeight(); i++) {
+            for (int j = 0; j < bi.getWidth(); j++) {
                 setDirection(i, j, biN);
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
         }
-            }
-        }).start();
-        new Thread(new Runnable() {
-            public void run() {
-                for (int i = bi.getHeight(); i < bi.getHeight(); i++) {
-                    for (int j = bi.getWidth()/2; j < bi.getWidth(); j++) {
-                        setDirection(i, j, biN);
-                        try {
-                            Thread.sleep(200);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }).start();
 
-        ReentrantLock locker = new ReentrantLock();
-        Condition condition = locker.newCondition();
+//        Thread th1 = new Thread(new Runnable() {
+//            public void run() {
+//                for (int i = 0; i < bi.getHeight(); i++) {
+//                    for (int j = 0; j < bi.getWidth()/2; j++) {
+//                        setDirection(i, j, biN);
+////                        System.out.println("next");
+////                        System.out.println(i + " " + j);
+//
+//                    }
+//                    try {
+//                        Thread.sleep(1);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                System.out.println("yes1");
+//            }
+//        });
+//
+//        th1.setPriority(Thread.MAX_PRIORITY);
+////
+//        Thread th2 = new Thread(new Runnable() {
+//            public void run() {
+//                for (int i = 0; i < bi.getHeight(); i++) {
+//                    for (int j = bi.getWidth() / 2; j < bi.getWidth(); j++) {
+//                        setDirection(i, j, biN);
+//
+//                    }
+//                    try {
+//                        Thread.sleep(1);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                System.out.println("yes2");
+//            }
+//        });
+//        th1.start();
+//        th2.start();
+//
+////        Thread th = Thread.currentThread();
+//        try {
+//            th1.join();
+//            th2.join();
+////            th.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        ReentrantLock locker = new ReentrantLock();
+//        Condition condition = locker.newCondition();
 
 //        setDirection(61, 172);
-
-        File file = new File("grad_map_image5.png");
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-        ImageIO.write(biN, "png", file);
+        System.out.println("done");
+//        File file = new File("grad_map_image5.png");
+//        if (!file.exists()) {
+//            file.createNewFile();
+//        }
+//        ImageIO.write(biN, "png", file);
         bi = biN;
     }
 
-    private void setDirection(int x, int y, BufferedImage biN) {
+    private  void setDirection(int x, int y, BufferedImage biN) {
 //        int argb1 =
         boolean flag = false;
         if ((y - 1) >= 0 && (bi.getRGB(y - 1, x) & 0xff) == 90) {
@@ -268,7 +287,7 @@ public class Grad {
                 mainDirection(i, j);
             }
         }
-        File file = new File("general_map_image4.png");
+        File file = new File("general_map_image5.png");
         if (!file.exists()) {
             file.createNewFile();
         }
@@ -376,7 +395,7 @@ public class Grad {
     public static void main(String[] args) throws IOException {
         long startTime = System.currentTimeMillis();
         System.out.println("Start");
-        BufferedImage bi = ImageIO.read(new File("6_left.png"));
+        BufferedImage bi = ImageIO.read(new File("10_right.png"));
         Grad grad = new Grad(bi);
         grad.gradGray();
         grad.gradientMap();
