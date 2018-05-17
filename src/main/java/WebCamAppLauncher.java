@@ -21,16 +21,21 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
@@ -47,13 +52,13 @@ public class WebCamAppLauncher extends Application {
 
     static {
         Webcam.setDriver(new IpCamDriver());
-//        try {
-//            IpCamDeviceRegistry.register(new IpCamDevice("Right", "http://192.168.202.115:800/", IpCamMode.PUSH));
-//            IpCamDeviceRegistry.register(new IpCamDevice("Left", "http://192.168.202.115:801/", IpCamMode.PUSH));
+        try {
+            IpCamDeviceRegistry.register(new IpCamDevice("Right", "http://192.168.202.115:800/", IpCamMode.PUSH));
+            IpCamDeviceRegistry.register(new IpCamDevice("Left", "http://192.168.202.115:801/", IpCamMode.PUSH));
 //            IpCamDeviceRegistry.register(new IpCamDevice("Left", "https://www.earthcam.com/ts/?cam=tsrobo3", IpCamMode.PUSH));
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -111,10 +116,11 @@ public class WebCamAppLauncher extends Application {
         topPane.setPrefHeight(40);
         root.setTop(topPane);
         webCamPane = new BorderPane();
-        BufferedImage bi = ImageIO.read(new File("10_right.png"));
+//        BufferedImage bi = ImageIO.read(new File("10_right.png"));
         Image image = new Image(new File("10_right.png").toURI().toURL().toString());
         webCamPane.setStyle("-fx-background-color: #ccc;");
-        imgWebCamCapturedImage = new ImageView(image);
+//        imgWebCamCapturedImage = new ImageView(image);
+        imgWebCamCapturedImage = new ImageView();
         webCamPane.setCenter(imgWebCamCapturedImage);
         root.setCenter(webCamPane);
         createTopPanel();
@@ -128,9 +134,78 @@ public class WebCamAppLauncher extends Application {
         createCameraControls();
         root.setBottom(bottomCameraControlPane);
 
+        EventHandler handler = new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                MouseEvent eventM = (MouseEvent) event;
+                System.out.println(event);
+                if (event.getEventType() == MouseEvent.MOUSE_DRAGGED && eventM.getButton() == MouseButton.PRIMARY) {
+                    System.out.println("dragged");
+                }
+                if (event.getEventType() == MouseEvent.MOUSE_ENTERED && eventM.getButton() == MouseButton.PRIMARY) {
+                    System.out.println("entered");
+                }
+                if (event.getEventType() == MouseEvent.ANY && eventM.getButton() == MouseButton.PRIMARY) {
+                    System.out.println("entered");
+                }
+                if (event.getEventType() == MouseEvent.MOUSE_RELEASED && eventM.getButton() == MouseButton.PRIMARY) {
+                    System.out.println("realesed");
+                }
+                if (event.getEventType() == MouseEvent.MOUSE_PRESSED && eventM.getButton() == MouseButton.PRIMARY) {
+                    System.out.println("pressed");
+                }
+                if (event.getEventType() == MouseEvent.DRAG_DETECTED && eventM.getButton() == MouseButton.PRIMARY) {
+                    System.out.println("dragDetect");
+                }
+                if (event.getEventType() == MouseEvent.MOUSE_MOVED && eventM.getButton() == MouseButton.PRIMARY) {
+                    System.out.println("moved");
+                }
+            }
+        };
+
+
+        imgWebCamCapturedImage.addEventHandler(MouseEvent.ANY, handler);
+//        {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                System.out.println(event);
+//                if (event.getEventType() == MouseEvent.MOUSE_DRAGGED && event.getButton() == MouseButton.PRIMARY) {
+//                    System.out.println("dragged");
+//                }
+//                if (event.getEventType() == MouseEvent.MOUSE_ENTERED && event.getButton() == MouseButton.PRIMARY) {
+//                    System.out.println("entered");
+//                }
+//                if (event.getEventType() == MouseEvent.ANY && event.getButton() == MouseButton.PRIMARY) {
+//                    System.out.println("entered");
+//                }
+//                if (event.getEventType() == MouseEvent.MOUSE_RELEASED && event.getButton() == MouseButton.PRIMARY) {
+//                    System.out.println("realesed");
+//                }
+//                if (event.getEventType() == MouseEvent.MOUSE_PRESSED && event.getButton() == MouseButton.PRIMARY) {
+//                    System.out.println("pressed");
+//                }
+//                if (event.getEventType() == MouseEvent.DRAG_DETECTED && event.getButton() == MouseButton.PRIMARY) {
+//                    System.out.println("dragDetect");
+//                }
+//                if (event.getEventType() == MouseEvent.MOUSE_MOVED && event.getButton() == MouseButton.PRIMARY) {
+//                    System.out.println("moved");
+//                }
+//                if (event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton() == MouseButton.PRIMARY) {
+//                    System.out.println("clicked");
+////                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+////                    alert.setTitle("Координаты");
+////                    alert.setHeaderText("1");
+////                    alert.setContentText("x: "+event.getX()+" y: "+event.getY());
+////                    alert.showAndWait();
+//                }
+//
+//            }
+//        }
+//        );
+
         primaryStage.setScene(new Scene(root));
-        primaryStage.setHeight(700);
-        primaryStage.setWidth(600);
+        primaryStage.setHeight(900);
+        primaryStage.setWidth(1600);
         primaryStage.centerOnScreen();
         primaryStage.show();
 
