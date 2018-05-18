@@ -192,11 +192,11 @@ public class WebCamAppLauncher extends Application {
 //                }
 //                if (event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton() == MouseButton.PRIMARY) {
 //                    System.out.println("clicked");
-////                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-////                    alert.setTitle("Координаты");
-////                    alert.setHeaderText("1");
-////                    alert.setContentText("x: "+event.getX()+" y: "+event.getY());
-////                    alert.showAndWait();
+//                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                    alert.setTitle("Координаты");
+//                    alert.setHeaderText("1");
+//                    alert.setContentText("x: "+event.getX()+" y: "+event.getY());
+//                    alert.showAndWait();
 //                }
 //
 //            }
