@@ -15,6 +15,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -50,6 +52,7 @@ public class CameraFxApp extends Application {
     private BorderPane webCamPane;
     private ImageView imgWebCamCapturedImage;
     private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<Image>();
+    ContextMenu сontextMenu;
 
 
     @Override
@@ -63,6 +66,12 @@ public class CameraFxApp extends Application {
         webCamPane.getChildren().add(imgWebCamCapturedImage);
         root.setCenter(webCamPane);
 
+
+        сontextMenu = new ContextMenu();
+        MenuItem makeFrag = new MenuItem("Вырезать фрагмент");
+        сontextMenu.getItems().add(makeFrag);
+
+
         EventHandler handler = new EventHandler() {
             Rectangle rect;
             double prevX = 0;
@@ -70,8 +79,6 @@ public class CameraFxApp extends Application {
 
             @Override
             public void handle(Event event) {
-
-
                 MouseEvent eventM = (MouseEvent) event;
 //                System.out.println(event);
 
@@ -127,11 +134,14 @@ public class CameraFxApp extends Application {
 //                    alert.setContentText("x: "+event.getX()+" y: "+event.getY());
 //                    alert.showAndWait();
                 }
+                if (eventM.getEventType() == MouseEvent.MOUSE_PRESSED && eventM.getButton() == MouseButton.SECONDARY) {
+                    сontextMenu.show(webCamPane, eventM.getScreenX(), eventM.getScreenY());
+                }
             }
         };
 
 
-        imgWebCamCapturedImage.addEventHandler(MouseEvent.ANY, handler);
+        webCamPane.addEventHandler(MouseEvent.ANY, handler);
 
 
 //        initializeWebCam(1);
