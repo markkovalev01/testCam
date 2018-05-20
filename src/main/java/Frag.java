@@ -7,21 +7,19 @@ public class Frag {
     public static void main(String[] args) throws IOException {
         BufferedImage bi = ImageIO.read(new File("general_map_image2.png"));
 //        BufferedImage bi = ImageIO.read(new File("general_map_image1.png"));
+        File file = new File("frag13.png");
         Frag frag = new Frag();
-        frag.makeFrag(bi, 768, 399, 224, 112);
+        frag.makeFrag(bi, 768, 399, 224, 112, file);
         BufferedImage bi1 = ImageIO.read(new File("frag.png"));
 //        frag.clear(bi1);
     }
 
 
-
-
-
-    public void makeFrag(BufferedImage bi, int x, int y, int width, int height) throws IOException {
+    public void makeFrag(BufferedImage bi, int x, int y, int width, int height, File out) throws IOException {
         int[][] arr = new int[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (bi.getRGB(x + i,y + j ) == -16744448) {
+                if (bi.getRGB(x + i, y + j) == -16744448) {
                     System.out.print(1 + " ");
                 } else {
                     System.out.print(" " + " ");
@@ -38,18 +36,18 @@ public class Frag {
             }
         }
 
-        File file = new File("frag13.png");
-        if (!file.exists()) {
-            file.createNewFile();
+//        File file = new File("frag13.png");
+        if (!out.exists()) {
+            out.createNewFile();
         }
-        ImageIO.write(bi1, "png", file);
+        ImageIO.write(bi1, "png", out);
     }
 
     public void clear(BufferedImage bi) throws IOException {
-        bi.setRGB(0,1, -65536);
+        bi.setRGB(0, 1, -65536);
         for (int i = 0; i < bi.getWidth(); i++) {
             for (int j = 0; j < bi.getHeight(); j++) {
-                if (j<(bi.getHeight()-2) && (bi.getRGB(i, j+ 1 ) == -16744448 || (bi.getRGB(i, j+ 2 ) == -16744448) )  ) {
+                if (j < (bi.getHeight() - 2) && (bi.getRGB(i, j + 1) == -16744448 || (bi.getRGB(i, j + 2) == -16744448))) {
                     System.out.println("yes");
                     bi.setRGB(i, j, -1);
                 }

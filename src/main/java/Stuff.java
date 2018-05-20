@@ -14,6 +14,10 @@ public class Stuff {
 //        double z = 21/Math.tan(angle*0.017);
         System.out.println(a);
         System.out.println(b);
+
+        String workingDir = System.getProperty("user.dir");
+        System.out.println("Current working directory : " + workingDir);
+
 //        System.out.println(c);
 //        System.out.println(d);
 //        System.out.println(f);
