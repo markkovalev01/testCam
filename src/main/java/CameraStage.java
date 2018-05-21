@@ -171,11 +171,12 @@ public class CameraStage extends Stage {
     public void findObject(BufferedImage bi1) throws IOException {
 //        imgWebCamCapturedImage.setImage(SwingFXUtils.toFXImage(bi1, null));
         Frag frag = new Frag();
+
         Grad grad = new Grad(bi);
         try {
-            grad.gradGray();
-            grad.gradientMap();
-            BufferedImage bi2 = grad.generalMapImage();
+            BufferedImage bi2 = grad.gradGray(bi);
+            bi2 = grad.gradientMap(bi2);
+            bi2 = grad.generalMapImage(bi2);
             MatchFrag matchFrag = new MatchFrag(bi1);
             bi2 = matchFrag.findMatchHOG(bi2);
             bi.setRGB(matchFrag.prefX, matchFrag.prefY, new java.awt.Color(250, 250, 0).getRGB());
