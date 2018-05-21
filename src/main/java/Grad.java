@@ -94,7 +94,7 @@ public class Grad {
 //        Condition condition = locker.newCondition();
 
 //        setDirection(61, 172);
-        System.out.println("done");
+//        System.out.println("done");
 //        File file = new File("grad_map_image5.png");
 //        if (!file.exists()) {
 //            file.createNewFile();
@@ -294,6 +294,21 @@ public class Grad {
         ImageIO.write(bi, "png", file);
     }
 
+    public BufferedImage generalMapImage() throws IOException {
+        for (int i = 0; i < bi.getHeight(); i += 16) {
+            for (int j = 0; j < bi.getWidth(); j += 16) {
+                mainDirection(i, j);
+            }
+        }
+//        File file = new File("general_map_image5.png");
+//        if (!file.exists()) {
+//            file.createNewFile();
+//        }
+//        ImageIO.write(bi, "png", file);
+        return bi;
+    }
+
+
     private void mainDirection(int i, int j) {
         int[] direct = new int[9];
 
@@ -392,66 +407,66 @@ public class Grad {
     }
 
 
-    public static void main(String[] args) throws IOException {
-        long startTime = System.currentTimeMillis();
-        System.out.println("Start");
-        BufferedImage bi = ImageIO.read(new File("10_right.png"));
-        Grad grad = new Grad(bi);
-        grad.gradGray();
-        grad.gradientMap();
-        grad.generalMap();
-        System.out.println(System.currentTimeMillis() - startTime + " End");
-//        BufferedImage bi1 = ImageIO.read(new File("grad_map_image1.png"));
-//        for (int i = 0; i < bi1.getHeight(); i++) {
-//            for (int j = 0; j < bi1.getWidth(); j++) {
-//                int argb = bi.getRGB(j, i);
-//                int alpha = (argb >> 24) & 0xff;
-//                int red = (argb >> 16) & 0xff;
-//                int green = (argb >> 8) & 0xff;
-//                int blue = (argb) & 0xff;
-//                if (red + green + blue == 270) {
-//                    bi1.setRGB(j, i, new Color(255, 0, 0).getRGB());
-//                    continue;
-//                }
-////                if (bi1.getRGB(j, i) % 1000 == -135) {
-////                    bi1.setRGB(j, i, 0x000000);
+//    public static void main(String[] args) throws IOException {
+//        long startTime = System.currentTimeMillis();
+//        System.out.println("Start");
+//        BufferedImage bi = ImageIO.read(new File("10_right.png"));
+//        Grad grad = new Grad(bi);
+//        grad.gradGray();
+//        grad.gradientMap();
+//        grad.generalMap();
+//        System.out.println(System.currentTimeMillis() - startTime + " End");
+////        BufferedImage bi1 = ImageIO.read(new File("grad_map_image1.png"));
+////        for (int i = 0; i < bi1.getHeight(); i++) {
+////            for (int j = 0; j < bi1.getWidth(); j++) {
+////                int argb = bi.getRGB(j, i);
+////                int alpha = (argb >> 24) & 0xff;
+////                int red = (argb >> 16) & 0xff;
+////                int green = (argb >> 8) & 0xff;
+////                int blue = (argb) & 0xff;
+////                if (red + green + blue == 270) {
+////                    bi1.setRGB(j, i, new Color(255, 0, 0).getRGB());
 ////                    continue;
 ////                }
-////                if (bi1.getRGB(j, i) % 1000 == -90) {
-////                    bi1.setRGB(j, i, 0xff0000);
-////                    continue;
-////                }
-////                if (bi1.getRGB(j, i) % 1000 == -45) {
-////                    bi1.setRGB(j, i, 0xffff00);
-////                    continue;
-////                }
-////                if (bi1.getRGB(j, i) % 1000 == 0) {
-////                    bi1.setRGB(j, i, 0x008000);
-////                    continue;
-////                }
-////                if (bi1.getRGB(j, i) % 1000 == 315) {
-////                    bi1.setRGB(j, i, 0x8b00ff);
-////                    continue;
-////                }
-////                if (bi1.getRGB(j, i) % 1000 == 225) {
-////                    bi1.setRGB(j, i, 0xffa500);
-////                    continue;
-////                }
-////                if (bi1.getRGB(j, i) % 1000 == 180) {
-////                    bi1.setRGB(j, i, 0x42aaff);
-////                    continue;
-////                }
-////                int a = bi.getRGB(j, i);
-////                    System.out.println(bi1.getRGB(j, i) % 1000 + "  ");
-//            }
-////            System.out.println();
-//        }
-//
-//        File file = new File("grad_line1.png");
-//        if (!file.exists()) {
-//            file.createNewFile();
-//        }
-//        ImageIO.write(bi1, "png", file);
-//
-    }
+//////                if (bi1.getRGB(j, i) % 1000 == -135) {
+//////                    bi1.setRGB(j, i, 0x000000);
+//////                    continue;
+//////                }
+//////                if (bi1.getRGB(j, i) % 1000 == -90) {
+//////                    bi1.setRGB(j, i, 0xff0000);
+//////                    continue;
+//////                }
+//////                if (bi1.getRGB(j, i) % 1000 == -45) {
+//////                    bi1.setRGB(j, i, 0xffff00);
+//////                    continue;
+//////                }
+//////                if (bi1.getRGB(j, i) % 1000 == 0) {
+//////                    bi1.setRGB(j, i, 0x008000);
+//////                    continue;
+//////                }
+//////                if (bi1.getRGB(j, i) % 1000 == 315) {
+//////                    bi1.setRGB(j, i, 0x8b00ff);
+//////                    continue;
+//////                }
+//////                if (bi1.getRGB(j, i) % 1000 == 225) {
+//////                    bi1.setRGB(j, i, 0xffa500);
+//////                    continue;
+//////                }
+//////                if (bi1.getRGB(j, i) % 1000 == 180) {
+//////                    bi1.setRGB(j, i, 0x42aaff);
+//////                    continue;
+//////                }
+//////                int a = bi.getRGB(j, i);
+//////                    System.out.println(bi1.getRGB(j, i) % 1000 + "  ");
+////            }
+//////            System.out.println();
+////        }
+////
+////        File file = new File("grad_line1.png");
+////        if (!file.exists()) {
+////            file.createNewFile();
+////        }
+////        ImageIO.write(bi1, "png", file);
+////
+//    }
 }

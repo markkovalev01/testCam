@@ -25,6 +25,8 @@ import java.io.IOException;
 
 public class CameraStage extends Stage {
 
+    CameraFxApp parent;
+
     String name;
     private BorderPane root;
     private Webcam webcam = null;
@@ -37,11 +39,12 @@ public class CameraStage extends Stage {
     Image image;
     BufferedImage bi;
 
-    CameraStage(String name) throws IOException {
-        System.out.println("run");
 
+    CameraStage(String name, final CameraFxApp parent) throws IOException {
+        System.out.println("run");
+        this.parent = parent;
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
-        bi = ImageIO.read(new File("10_right.png"));
+        bi = ImageIO.read(new File("10_Right.png"));
 //        image = new Image(new File("10_right.png").toURI().toURL().toString());
         image = SwingFXUtils.toFXImage(bi, null);
 
@@ -67,10 +70,32 @@ public class CameraStage extends Stage {
                 }
             }
         });
-        сontextMenu.getItems().add(makeFrag);
+        MenuItem findFrag = new MenuItem("Найти объект");
+        findFrag.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Frag frag = new Frag();
+                Grad grad = new Grad(bi);
+                try {
+                    grad.gradGray();
+                    grad.gradientMap();
+                    BufferedImage bi1 = grad.generalMapImage();
+//                    System.out.println(area.getX() + " " + area.getY());
+                    BufferedImage bi2 = frag.makeFrag(bi1, (int) area.getX(), (int) area.getY(), (int) area.getWidth(), (int) area.getHeight());
+//                    imgWebCamCapturedImage.setImage(SwingFXUtils.toFXImage(bi1, null));
+                    File file = new File("frag16.png");
+                    ImageIO.write(bi2, "png", file);
+                    parent.left.findObject(bi2);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        сontextMenu.getItems().addAll(makeFrag, findFrag);
 
 
-        EventHandler handler = new EventHandler() {
+        EventHandler handlerMouse = new EventHandler() {
 
             double prevX = 0;
             double prevY = 0;
@@ -79,9 +104,9 @@ public class CameraStage extends Stage {
             public void handle(Event event) {
                 MouseEvent eventM = (MouseEvent) event;
                 if (event.getEventType() == MouseEvent.MOUSE_DRAGGED && eventM.getButton() == MouseButton.PRIMARY) {
-                    System.out.println("dragged");
+//                    System.out.println("dragged");
                     if (area != null) {
-                        System.out.println(eventM.getX() + " " + prevX + " " + eventM.getY() + " " + prevY);
+//                        System.out.println(eventM.getX() + " " + prevX + " " + eventM.getY() + " " + prevY);
 //                        double xSpeed=
                         area.setHeight((int) (area.getHeight() + (eventM.getY() - prevY)));
                         area.setWidth((int) (area.getWidth() + (eventM.getX() - prevX)));
@@ -90,17 +115,17 @@ public class CameraStage extends Stage {
                     }
                 }
                 if (event.getEventType() == MouseEvent.MOUSE_ENTERED && eventM.getButton() == MouseButton.PRIMARY) {
-                    System.out.println("entered");
+//                    System.out.println("entered");
                 }
                 if (event.getEventType() == MouseEvent.ANY && eventM.getButton() == MouseButton.PRIMARY) {
-                    System.out.println("entered");
+//                    System.out.println("entered");
                 }
                 if (event.getEventType() == MouseEvent.MOUSE_RELEASED && eventM.getButton() == MouseButton.PRIMARY) {
-                    System.out.println("realesed");
+//                    System.out.println("realesed");
                 }
                 if (event.getEventType() == MouseEvent.MOUSE_PRESSED && eventM.getButton() == MouseButton.PRIMARY) {
-                    System.out.println("pressed");
-                    System.out.println(eventM.getX() + " " + eventM.getY());
+//                    System.out.println("pressed");
+//                    System.out.println(eventM.getX() + " " + eventM.getY());
                     prevX = eventM.getX();
                     prevY = eventM.getY();
                     if (area != null) {
@@ -110,17 +135,16 @@ public class CameraStage extends Stage {
                     area = new Rectangle(eventM.getX(), eventM.getY(), 1, 1);
                     area.setFill(Color.web("rgba(255,255,255,0.3)"));
                     webCamPane.getChildren().add(area);
-                    System.out.println("pressed");
+//                    System.out.println("pressed");
                 }
                 if (event.getEventType() == MouseEvent.DRAG_DETECTED && eventM.getButton() == MouseButton.PRIMARY) {
-                    System.out.println("dragDetect");
+//                    System.out.println("dragDetect");
                 }
                 if (event.getEventType() == MouseEvent.MOUSE_MOVED && eventM.getButton() == MouseButton.PRIMARY) {
-                    System.out.println("moved");
+//                    System.out.println("moved");
                 }
                 if (event.getEventType() == MouseEvent.MOUSE_CLICKED && eventM.getButton() == MouseButton.PRIMARY) {
-                    System.out.println("clicked");
-
+//                    System.out.println("clicked");
 //                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
 //                    alert.setTitle("Координаты");
 //                    alert.setHeaderText("1");
@@ -134,7 +158,7 @@ public class CameraStage extends Stage {
         };
 
 
-        webCamPane.addEventHandler(MouseEvent.ANY, handler);
+        webCamPane.addEventHandler(MouseEvent.ANY, handlerMouse);
 
         setTitle(name);
         setScene(new Scene(root));
@@ -142,5 +166,22 @@ public class CameraStage extends Stage {
         setWidth(1280);
         centerOnScreen();
         show();
+    }
+
+    public void findObject(BufferedImage bi1) throws IOException {
+//        imgWebCamCapturedImage.setImage(SwingFXUtils.toFXImage(bi1, null));
+        Frag frag = new Frag();
+        Grad grad = new Grad(bi);
+        try {
+            grad.gradGray();
+            grad.gradientMap();
+            BufferedImage bi2 = grad.generalMapImage();
+            MatchFrag matchFrag = new MatchFrag(bi1);
+            bi2 = matchFrag.findMatchHOG(bi2);
+            bi.setRGB(matchFrag.prefX, matchFrag.prefY, new java.awt.Color(250, 250, 0).getRGB());
+            imgWebCamCapturedImage.setImage(SwingFXUtils.toFXImage(bi, null));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

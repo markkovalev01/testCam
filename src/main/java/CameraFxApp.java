@@ -61,11 +61,13 @@ public class CameraFxApp extends Application {
     final FileChooser fileChooser = new FileChooser();
     Image image;
     BufferedImage bi;
+    CameraStage right;
+    CameraStage left;
 
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        new CameraStage("Right");
+        right = new CameraStage("Right", this);
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -73,7 +75,7 @@ public class CameraFxApp extends Application {
                     @Override
                     public void run() {
                         try {
-                            CameraStage cs = new CameraStage("Left");
+                            left = new CameraStage("Left", CameraFxApp.this);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
