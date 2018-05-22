@@ -6,7 +6,8 @@ public class Stuff {
 //        Расстояние
         double a = 6.05*Math.sqrt(3)/2;
         double b = Math.sqrt(3*(5.26*5.26 + 2.96*2.96))/2;
-//        double c = (a+b)/2;
+        double c = (a+b)/2;
+//        double r = 10.08*c/d;
 //        double d = 81/c;
 //        double f = 21.622/Math.tan(1.05/1.99);
 //        double g = 30./640;
@@ -14,9 +15,10 @@ public class Stuff {
 //        double z = 21/Math.tan(angle*0.017);
         System.out.println(a);
         System.out.println(b);
+        System.out.println(c);
 
-        String workingDir = System.getProperty("user.dir");
-        System.out.println("Current working directory : " + workingDir);
+//        String workingDir = System.getProperty("user.dir");
+//        System.out.println("Current working directory : " + workingDir);
 
 //        System.out.println(c);
 //        System.out.println(d);

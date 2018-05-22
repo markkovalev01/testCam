@@ -6,8 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -38,13 +37,14 @@ public class CameraStage extends Stage {
     final FileChooser fileChooser = new FileChooser();
     Image image;
     BufferedImage bi;
+    TextArea distanceLable = null;
 
 
-    CameraStage(String name, final CameraFxApp parent) throws IOException {
+    CameraStage(String name, File file, final CameraFxApp parent) throws IOException {
         System.out.println("run");
         this.parent = parent;
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
-        bi = ImageIO.read(new File("10_Right.png"));
+        bi = ImageIO.read(file);
 //        image = new Image(new File("10_right.png").toURI().toURL().toString());
         image = SwingFXUtils.toFXImage(bi, null);
 
@@ -55,6 +55,14 @@ public class CameraStage extends Stage {
         webCamPane.getChildren().add(imgWebCamCapturedImage);
         root.setCenter(webCamPane);
 
+        BufferedImage bi1 = ImageIO.read(file);
+        for (int i = 0; i < bi1.getHeight(); i += 17) {
+            for (int j = 0; j < bi1.getWidth(); j += 17) {
+                bi1.setRGB(j, i, 0);
+            }
+        }
+
+        imgWebCamCapturedImage.setImage(SwingFXUtils.toFXImage(bi1, null));
 
         сontextMenu = new ContextMenu();
         MenuItem makeFrag = new MenuItem("Вырезать фрагмент");
@@ -92,7 +100,19 @@ public class CameraStage extends Stage {
 
             }
         });
-        сontextMenu.getItems().addAll(makeFrag, findFrag);
+
+        final MenuItem findDistance = new MenuItem("Найти расстояние");
+        findDistance.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    findDistance();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        сontextMenu.getItems().addAll(makeFrag, findFrag, findDistance);
 
 
         EventHandler handlerMouse = new EventHandler() {
@@ -179,10 +199,70 @@ public class CameraStage extends Stage {
             bi2 = grad.generalMapImage(bi2);
             MatchFrag matchFrag = new MatchFrag(bi1);
             bi2 = matchFrag.findMatchHOG(bi2);
-            bi.setRGB(matchFrag.prefX, matchFrag.prefY, new java.awt.Color(250, 250, 0).getRGB());
+//            bi.setRGB(matchFrag.prefX, matchFrag.prefY, new java.awt.Color(250, 250, 0).getRGB());
+            area = new Rectangle(matchFrag.prefX, matchFrag.prefY, parent.right.area.getWidth(), parent.right.area.getHeight());
+            area.setFill(Color.web("rgba(255,255,255,0.3)"));
+            webCamPane.getChildren().add(area);
             imgWebCamCapturedImage.setImage(SwingFXUtils.toFXImage(bi, null));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public void findDistance() throws IOException {
+        double d = parent.left.area.getX() - area.getX();
+        double a = 6.05 * Math.sqrt(3) / 2;
+        double b = Math.sqrt(3 * (5.26 * 5.26 + 2.96 * 2.96)) / 2;
+        double c = (a + b) / 2;
+        double r = 10.08 * c / d;
+        System.out.println("r " + r);
+//        if (distanceLable != null) {
+//            int i = webCamPane.getChildren().indexOf(distanceLable);
+//            webCamPane.getChildren().remove(a);
+//            distanceLable = null;
+//        }
+        distanceLable = new TextArea("Расстояние до объекта: ");
+        distanceLable.setWrapText(true);
+        distanceLable.setEditable(false);
+
+
+//        distanceLable.setText();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Определение расстояния");
+        alert.setHeaderText("Полученное расстояние: ");
+        alert.setContentText(r+"");
+        alert.show();
+
+//        webCamPane.getChildren().;
+//        distanceLable.setVisible(true);
+//        Grad grad = new Grad(bi);
+//        BufferedImage bi2 = grad.gradGray(bi);
+//        bi2 = grad.gradientMap(bi2);
+//        int arr[] = new int[3];
+//        arr = parent.left.getDistanceCoordinates();
+//        parent.left.getDistanceCoordinates();
+    }
+
+    public void getDistanceCoordinates() throws IOException {
+        Grad grad = new Grad(bi);
+        BufferedImage bi2 = grad.gradGray(bi);
+        bi2 = grad.gradientMap(bi2);
+        bi2 = grad.generalMapImage(bi2);
+        int k = 0;
+        System.out.println("go" + area.getWidth());
+        for (int i = (int) area.getX(); i < area.getWidth(); i += area.getWidth() / 2) {
+            for (int j = (int) area.getY(); j < area.getWidth(); j++) {
+                if (bi2.getRGB(i, j) != bi2.getRGB((int) area.getY(), (int) area.getX())) {
+                    bi2.setRGB(i, j, 0xffffff);
+                    break;
+//                  arr[]
+                }
+                System.out.println("yes");
+                bi2.setRGB(j, i, 0xffffff);
+            }
+        }
+        imgWebCamCapturedImage.setImage(SwingFXUtils.toFXImage(bi2, null));
+    }
+
 }

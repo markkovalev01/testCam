@@ -67,7 +67,8 @@ public class CameraFxApp extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        right = new CameraStage("Right", this);
+        File file = new File("10_Right.png");
+        right = new CameraStage("Right", file, this);
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -75,7 +76,7 @@ public class CameraFxApp extends Application {
                     @Override
                     public void run() {
                         try {
-                            left = new CameraStage("Left", CameraFxApp.this);
+                            left = new CameraStage("Left", new File("10_Left.png"), CameraFxApp.this);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -87,7 +88,7 @@ public class CameraFxApp extends Application {
                 return null;
             }
         };
-        Thread thread =  new Thread(task);
+        Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
 //        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
