@@ -46,12 +46,12 @@ public class CameraStage extends Stage {
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
         bi = ImageIO.read(file);
 //        image = new Image(new File("10_right.png").toURI().toURL().toString());
-        image = SwingFXUtils.toFXImage(bi, null);
+//        image = SwingFXUtils.toFXImage(bi, null);
 
         root = new BorderPane();
         webCamPane = new BorderPane();
-//        imgWebCamCapturedImage = new ImageView();
-        imgWebCamCapturedImage = new ImageView(image);
+        imgWebCamCapturedImage = new ImageView();
+//        imgWebCamCapturedImage = new ImageView(image);
         webCamPane.getChildren().add(imgWebCamCapturedImage);
         root.setCenter(webCamPane);
 
@@ -63,6 +63,17 @@ public class CameraStage extends Stage {
         }
 
         imgWebCamCapturedImage.setImage(SwingFXUtils.toFXImage(bi1, null));
+
+//        BufferedImage bi1 = ImageIO.read(file);
+//
+//        for(int i = 0; i<bi1.getHeight(); i+=16){
+//            for (int j = 0; j < bi1.getWidth(); j+=16) {
+//
+//                bi1.setRGB(j,i, 0);
+//            }
+//        }
+//        imgWebCamCapturedImage.setImage(SwingFXUtils.toFXImage(bi1, null));
+
 
         сontextMenu = new ContextMenu();
         MenuItem makeFrag = new MenuItem("Вырезать фрагмент");
@@ -164,6 +175,7 @@ public class CameraStage extends Stage {
 //                    System.out.println("moved");
                 }
                 if (event.getEventType() == MouseEvent.MOUSE_CLICKED && eventM.getButton() == MouseButton.PRIMARY) {
+                    System.out.println("ev" + eventM.getX() + " " + eventM.getY());
 //                    System.out.println("clicked");
 //                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
 //                    alert.setTitle("Координаты");
@@ -179,6 +191,15 @@ public class CameraStage extends Stage {
 
 
         webCamPane.addEventHandler(MouseEvent.ANY, handlerMouse);
+//        for(int i = 0; i<webCamPane.getHeight(); i+=16){
+//            for (int j = 0; j < webCamPane.getWidth(); j+=16) {
+//                Rectangle rec = new Rectangle(i,j,1,1);
+//                rec.setFill(new Color(0,0,0,1));
+//                webCamPane.getChildren().add(rec);
+//            }
+//        }
+
+
 
         setTitle(name);
         setScene(new Scene(root));

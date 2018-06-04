@@ -17,8 +17,8 @@ public class MatchFrag {
     int prevMatch = 0;
     ArrayList<Integer> match;
     ArrayList<Integer[]> xy;
-    int prefX =0;
-    int prefY =0;
+    int prefX = 0;
+    int prefY = 0;
 
     MatchFrag(File file) throws IOException {
         match = new ArrayList<Integer>();
@@ -186,8 +186,8 @@ public class MatchFrag {
 //        BufferedImage bi = ImageIO.read(file);
         int buffMatch = 0;
         System.out.println("frag " + frag[0].length + " " + frag.length);
-        for (int i = 0; i < bi.getHeight(); i += 16) {
-            for (int j = 0; j < bi.getWidth(); j += 16) {
+        for (int i = bi.getHeight() % 16; i < bi.getHeight(); i += 16) {
+            for (int j = bi.getWidth() % 16; j < bi.getWidth(); j += 16) {
                 compareFragHOG(i, j, bi);
             }
         }
@@ -206,7 +206,7 @@ public class MatchFrag {
 //                System.out.println(buffI + " " + buffJ);
 
                 buff = match.get(k);
-                buffI =  xy.get(k)[1];
+                buffI = xy.get(k)[1];
                 buffJ = xy.get(k)[0];
             }
 
@@ -256,8 +256,8 @@ public class MatchFrag {
 //        System.out.println(buffMatch);
 
 //        if (buffMatch >= (frag.length * frag[0].length)/34) {
-            match.add(buffMatch);
-            xy.add(new Integer[]{x, y});
+        match.add(buffMatch);
+        xy.add(new Integer[]{x, y});
 //            System.out.println(match);
 //        }
     }
