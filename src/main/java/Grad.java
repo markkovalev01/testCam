@@ -356,7 +356,6 @@ public class Grad {
 
     private void mainDirection(int i, int j, BufferedImage bi) {
         int[] direct = new int[9];
-
         for (int k = i; k < i + 16; k++) {
             for (int c = j; c < j + 16; c++) {
                 int argb = bi.getRGB(c, k);
@@ -395,7 +394,6 @@ public class Grad {
                 }
             }
         }
-
         int max = 0;
         int kk = 0;
         for (int k = 0; k < direct.length; k++) {
@@ -405,7 +403,6 @@ public class Grad {
                 kk = k;
             }
         }
-
         for (int k = i; k < i + 16; k++) {
             for (int c = j; c < j + 16; c++) {
 //                System.out.println(max);

@@ -24,7 +24,7 @@ import java.io.IOException;
 
 public class CameraStage extends Stage {
 
-    CameraFxApp parent;
+    private CameraFxApp parent;
 
     String name;
     private BorderPane root;
@@ -37,7 +37,7 @@ public class CameraStage extends Stage {
     final FileChooser fileChooser = new FileChooser();
     Image image;
     BufferedImage bi;
-    TextArea distanceLable = null;
+    private TextArea distanceLable = null;
 
 
     CameraStage(String name, File file, final CameraFxApp parent) throws IOException {
@@ -231,11 +231,13 @@ public class CameraStage extends Stage {
     }
 
     public void findDistance() throws IOException {
-        double d = parent.left.area.getX() - area.getX();
-        double a = 6.05 * Math.sqrt(3) / 2;
-        double b = Math.sqrt(3 * (5.26 * 5.26 + 2.96 * 2.96)) / 2;
-        double c = (a + b) / 2;
-        double r = 10.08 * c / d;
+        Distance distance = new Distance(5.26, 2.96, 60, 10.08);
+        double r = distance.calcDistance(parent.left.area.getX(), area.getX());
+//        double d = parent.left.area.getX() - area.getX();
+//        double a = 6.05 * Math.sqrt(3) / 2;
+//        double b = Math.sqrt(3 * (5.26 * 5.26 + 2.96 * 2.96)) / 2;
+//        double c = (a + b) / 2;
+//        double r = 10.08 * c / d;
         System.out.println("r " + r);
 //        if (distanceLable != null) {
 //            int i = webCamPane.getChildren().indexOf(distanceLable);

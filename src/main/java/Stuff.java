@@ -45,3 +45,59 @@ public class Stuff {
 //25
 //0.7570093457943925
 //1216.9198192230033
+
+
+//          if (buffI == x && buffJ == y) {
+//          biN.setRGB(y, x, new Color(255, 255, 255).getRGB());
+//          return;
+//          }
+//          if (buffI == x + 1 && buffJ == y + 1) {
+//          biN.setRGB(y, x, new Color(0, 0, 135).getRGB());
+//          return;
+//          }
+//          if (buffI == x && buffJ == y + 1) {
+//          biN.setRGB(y, x, new Color(0, 0, 90).getRGB());
+//          return;
+//          }
+//          if (buffI == x - 1 && buffJ == y + 1) {
+//          biN.setRGB(y, x, new Color(0, 0, 45).getRGB());
+//          return;
+//          }
+//          if (buffI == x - 1 && buffJ == y) {
+//          biN.setRGB(y, x, new Color(0, 0, 0).getRGB());
+//          return;
+//          }
+//          if (buffI == x - 1 && buffJ == y - 1) {
+//          biN.setRGB(y, x, new Color(0, 60, 255).getRGB());
+//          return;
+//          }
+//          if (buffI == x && buffJ == y - 1) {
+//          biN.setRGB(y, x, new Color(0, 15, 255).getRGB());
+//          return;
+//          }
+//          if (buffI == x + 1 && buffJ == y - 1) {
+//          biN.setRGB(y, x, new Color(0, 0, 225).getRGB());
+//          return;
+//          }
+//          if (buffI == x + 1 && buffJ == y) {
+//          biN.setRGB(y, x, new Color(0, 0, 180).getRGB());
+//          return;
+//          }
+//          }
+
+
+//    public BufferedImage gradGray(BufferedImage bi) throws IOException {
+//        BufferedImage biN = new BufferedImage(bi.getWidth(), bi.getHeight(), BufferedImage.TYPE_INT_ARGB);
+//        for (int i = 0; i < bi.getHeight(); i++) {
+//            for (int j = 0; j < bi.getWidth(); j++) {
+//                int argb = bi.getRGB(j, i);
+//                int alpha = (argb >> 24) & 0xff;
+//                int red = (argb >> 16) & 0xff;
+//                int green = (argb >> 8) & 0xff;
+//                int blue = (argb) & 0xff;
+//                green = blue = red;
+//                biN.setRGB(j, i, (red << 16) | (green << 8) | blue);
+//            }
+//        }
+//        return biN;
+//    }
