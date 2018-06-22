@@ -1,4 +1,6 @@
 import javax.xml.transform.sax.SAXSource;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Stuff {
     public static void main(String[] args) {
@@ -100,4 +102,44 @@ public class Stuff {
 //            }
 //        }
 //        return biN;
+//    }
+
+
+
+//    public BufferedImage findMatchHOG(BufferedImage bi) throws IOException {
+//        int buffMatch = 0;
+//        System.out.println("frag " + frag[0].length + " " + frag.length);
+//        for (int i = bi.getHeight() % 16; i < bi.getHeight(); i += 16) {
+//            for (int j = bi.getWidth() % 16; j < bi.getWidth(); j += 16) {
+//                compareFragHOG(i, j, bi);
+//            }
+//        }
+//        int buff = 0;
+//        int buffI = 0;
+//        int buffJ = 0;
+//        for (int k = 0; k < match.size(); k++) {
+//
+//            if (match.get(k) >= buff) {
+//                buff = match.get(k);
+//                buffI = xy.get(k)[1];
+//                buffJ = xy.get(k)[0];
+//            }
+//        }
+//        prefX = buffI;
+//        prefY = buffJ;
+//        return bi;
+//    }
+//    private void compareFragHOG(int x, int y, BufferedImage bi) {
+//        int width = frag[0].length;
+//        int height = frag.length;
+//        int buffMatch = 0;
+//        for (int i = 0; i < height; i += 16) {
+//            for (int j = 0; j < width; j += 16) {
+//                if (y + j < bi.getWidth() && i + x < bi.getHeight() && bi.getRGB(j + y, i + x) == frag[i][j]) {
+//                    buffMatch++;
+//                }
+//            }
+//        }
+//        match.add(buffMatch);
+//        xy.add(new Integer[]{x, y});
 //    }

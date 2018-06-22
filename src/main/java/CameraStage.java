@@ -210,6 +210,7 @@ public class CameraStage extends Stage {
     }
 
     public void findObject(BufferedImage bi1) throws IOException {
+        SVM svm = new SVM();
 //        imgWebCamCapturedImage.setImage(SwingFXUtils.toFXImage(bi1, null));
         Frag frag = new Frag();
 
