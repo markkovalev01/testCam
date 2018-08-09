@@ -214,7 +214,7 @@ public class MatchFrag {
         System.out.println(buff);
 
 //        for (int k = 0; k < xy.size(); k++) {
-//            bi.setRGB(buffI, buffJ, new Color(250, 250, 0).getRGB());
+            bi.setRGB(buffI, buffJ, new Color(250, 250, 0).getRGB());
 //        }
         prefX = buffI;
         prefY = buffJ;
@@ -228,7 +228,9 @@ public class MatchFrag {
         int width = frag[0].length;
         int height = frag.length;
         int buffMatch = 0;
-
+        if (bi.getRGB(y, x) == -65536) {
+            return;
+        }
 
         for (int i = 0; i < height; i += 2) {
             for (int j = 0; j < width; j += 2) {
@@ -255,10 +257,10 @@ public class MatchFrag {
         }
 //        System.out.println(buffMatch);
 
-        if (buffMatch >= 96) {
-        match.add(buffMatch);
-        xy.add(new Integer[]{x, y});
-//            System.out.println(match);
+        if (buffMatch >= 110) {
+            match.add(buffMatch);
+            xy.add(new Integer[]{x, y});
+            System.out.println(match);
         }
     }
 

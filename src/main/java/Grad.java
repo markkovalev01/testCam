@@ -19,15 +19,19 @@ public class Grad {
     public void gradGray() throws IOException {
         for (int i = 0; i < bi.getHeight(); i++) {
             for (int j = 0; j < bi.getWidth(); j++) {
-
                 int argb = bi.getRGB(j, i);
                 int alpha = (argb >> 24) & 0xff;
+                if (alpha != 255) {
+                    bi.setRGB(j, i, new Color(255,0,0).getRGB());
+                    continue;
+                }
                 int red = (argb >> 16) & 0xff;
                 int green = (argb >> 8) & 0xff;
                 int blue = (argb) & 0xff;
 //                int grayRGB = (red * 77 + green * 150 + blue * 29 + 128) / 256;
-                green = blue = red;
-                bi.setRGB(j, i, (red << 16) | (green << 8) | blue);
+//                green = blue = red;
+                int gray = (red + green + blue) / 3;
+                bi.setRGB(j, i, new Color(gray, gray, gray).getRGB());
             }
         }
     }
@@ -38,6 +42,10 @@ public class Grad {
             for (int j = 0; j < bi.getWidth(); j++) {
                 int argb = bi.getRGB(j, i);
                 int alpha = (argb >> 24) & 0xff;
+                if (alpha != 255) {
+                    bi.setRGB(j, i, new Color(255,0,0).getRGB());
+                    continue;
+                }
                 int red = (argb >> 16) & 0xff;
                 int green = (argb >> 8) & 0xff;
                 int blue = (argb) & 0xff;
@@ -137,6 +145,13 @@ public class Grad {
 
     private void setDirection(int x, int y, BufferedImage biN) {
 //        int argb1 =
+        int argb = bi.getRGB(y, x);
+        int alpha = (argb >> 24) & 0xff;
+        if (bi.getRGB(y,x)==-65536) {
+            biN.setRGB(y, x, new Color(255, 0, 0).getRGB());
+            return;
+        }
+
         boolean flag = false;
         if ((y - 1) >= 0 && (bi.getRGB(y - 1, x) & 0xff) == 90) {
             flag = true;
@@ -152,13 +167,19 @@ public class Grad {
                 if (i > bi.getHeight() || j > bi.getWidth()) {
                     continue;
                 }
+
                 if (i < 0 || j < 0) {
                     continue;
                 }
+
                 if (i == x && j == y) {
                     continue;
                 }
                 if (j != y + 1 && flag) {
+                    continue;
+                }
+
+                if (bi.getRGB(j,i) == -65536) {
                     continue;
                 }
                 if ((bi.getRGB(j, i) & 0xff) < grad) {
@@ -359,7 +380,7 @@ public class Grad {
         int[] direct = new int[9];
         for (int k = i; k < i + 2 && k < bi.getHeight(); k++) {
             for (int c = j; c < j + 2 && c < bi.getWidth(); c++) {
-                System.out.println(bi.getWidth()+" "+k+" "+c+" "+bi.getHeight());
+                System.out.println(bi.getWidth() + " " + k + " " + c + " " + bi.getHeight());
                 int argb = bi.getRGB(c, k);
                 int alpha = (argb >> 24) & 0xff;
                 int red = (argb >> 16) & 0xff;
@@ -456,7 +477,7 @@ public class Grad {
 
         for (int k = i; k < i + 2 && k < bi.getHeight(); k++) {
             for (int c = j; c < j + 2 && c < bi.getWidth(); c++) {
-                System.out.println(bi.getWidth()+" "+k+" "+c+" "+bi.getHeight());
+                System.out.println(bi.getWidth() + " " + k + " " + c + " " + bi.getHeight());
                 int argb = bi.getRGB(c, k);
                 int alpha = (argb >> 24) & 0xff;
                 int red = (argb >> 16) & 0xff;

@@ -98,11 +98,11 @@ public class CameraStage extends Stage {
                 try {
                     grad.gradGray();
                     grad.gradientMap();
-                    BufferedImage bi1 = grad.generalMapImage();
+//                    BufferedImage bi1 = grad.generalMapImage();
 //                    System.out.println(area.getX() + " " + area.getY());
-                    BufferedImage bi2 = frag.makeFrag(bi1, (int) area.getX(), (int) area.getY(), (int) area.getWidth(), (int) area.getHeight());
+                    BufferedImage bi2 = frag.makeFrag(grad.bi, (int) area.getX(), (int) area.getY(), (int) area.getWidth(), (int) area.getHeight());
 //                    imgWebCamCapturedImage.setImage(SwingFXUtils.toFXImage(bi1, null));
-                    File file = new File("frag16.png");
+                    File file = new File("frag17.png");
                     ImageIO.write(bi2, "png", file);
                     parent.left.findObject(bi2);
                 } catch (IOException e) {
@@ -218,7 +218,7 @@ public class CameraStage extends Stage {
         try {
             BufferedImage bi2 = grad.gradGray(bi);
             bi2 = grad.gradientMap(bi2);
-            bi2 = grad.generalMapImage(bi2);
+//            bi2 = grad.generalMapImage(bi2);
             MatchFrag matchFrag = new MatchFrag(bi1);
             bi2 = matchFrag.findMatchHOG(bi2);
 //            bi.setRGB(matchFrag.prefX, matchFrag.prefY, new java.awt.Color(250, 250, 0).getRGB());

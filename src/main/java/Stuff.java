@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.xml.transform.sax.SAXSource;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,15 +13,76 @@ public class Stuff {
         Grad grad = new Grad(bi);
         grad.gradGray();
         grad.gradientMap();
-        BufferedImage bi1 = grad.generalMapImage();
-        File file = new File("ress.png");
+//        BufferedImage bi1 = grad.generalMapImage();
+        File file = new File("ress3.png");
         if (!file.exists()) {
             file.createNewFile();
         }
-        ImageIO.write(bi1, "png", file);
-        MatchFrag mf = new MatchFrag(new File("frag16.png"));
-        mf.findMatchHOG(new File("ress.png"));
+//        System.out.println(bi.getRGB(0,0));
+        ImageIO.write(grad.bi, "png", file);
+//        Frag frag = new Frag();
+//        frag.makeFrag(ImageIO.read(file),451, 164, 60,10, new File("frag17.png"));
+        MatchFrag mf = new MatchFrag(new File("frag17.png"));
+//        BufferedImage bi = ImageIO.read(new File("ress2.png"));
+        File file1 = new File("matchRess.png");
+        if (!file1.exists()) {
+            file1.createNewFile();
+        }
+        mf.findMatchHOG(file);
 
+        bi = ImageIO.read(new File("0001.png"));
+        BufferedImage bi1 = ImageIO.read(new File("findFragHOG2.png"));
+        int color = new Color(250, 250, 0).getRGB();
+
+        for (int i = 0; i < bi.getHeight(); i++) {
+            for (int j = 0; j < bi.getWidth(); j++) {
+                if (bi1.getRGB(j,i) == color){
+                    bi.setRGB(j,i,color);
+                }
+            }
+        }
+
+        File res = new File("matchRess.png");
+        ImageIO.write(bi,"png",res);
+
+//        int x = 0;
+//        int y = 0;
+//        int m = 0;
+//        int buffM = 0;
+//        int buffX = 0;
+//        int buffY = 0;
+//        boolean flag = false;
+//        Color color = new Color(255, 255, 255);
+//        for (int i = 0; i < bi.getHeight(); i++) {
+//            for (int j = 0; j < bi.getWidth(); j++) {
+//                if (bi.getRGB(j, i) == -65536) {
+//                    continue;
+//                }
+//                if (bi.getRGB(j, i) != color.getRGB() && flag) {
+//                    flag = false;
+//                    if (buffM > m) {
+//                        m = buffM;
+//                        buffM = 0;
+//                        x=buffX;
+//                        y=buffY;
+//                    }
+//                }
+//                if (flag) {
+//                    buffM++;
+//                }
+//                if (bi.getRGB(j, i) == color.getRGB() && bi.getRGB(j, i ) != color.getRGB()) {
+//                    System.out.println("yes");
+//                    flag = true;
+//                    buffX = i;
+//                    buffY = j;
+//                    buffM++;
+//                    continue;
+//                }
+//
+//            }
+//        }
+//        bi.setRGB(y, x, new Color(250, 250, 0).getRGB());
+//ImageIO.write(bi,"png",new File("ress2.png"));
 //        int i = 1;
 //        System.out.println(1|1);
 //        Расстояние
