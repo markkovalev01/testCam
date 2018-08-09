@@ -67,7 +67,7 @@ public class CameraFxApp extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        File file = new File("10_Right.png");
+        File file = new File("0001.png");
         right = new CameraStage("Right", file, this);
         Task<Void> task = new Task<Void>() {
             @Override
@@ -76,7 +76,7 @@ public class CameraFxApp extends Application {
                     @Override
                     public void run() {
                         try {
-                            left = new CameraStage("Left", new File("10_Left.png"), CameraFxApp.this);
+                            left = new CameraStage("Left", new File("0021.png"), CameraFxApp.this);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

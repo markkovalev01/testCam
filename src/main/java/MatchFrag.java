@@ -165,8 +165,8 @@ public class MatchFrag {
     public void findMatchHOG(File file) throws IOException {
         BufferedImage bi = ImageIO.read(file);
         int buffMatch = 0;
-        for (int i = 0; i < bi.getHeight(); i += 16) {
-            for (int j = 0; j < bi.getWidth(); j += 16) {
+        for (int i = 0; i < bi.getHeight(); i += 2) {
+            for (int j = 0; j < bi.getWidth(); j += 2) {
                 compareFragHOG(i, j, bi);
             }
         }
@@ -186,8 +186,8 @@ public class MatchFrag {
 //        BufferedImage bi = ImageIO.read(file);
         int buffMatch = 0;
         System.out.println("frag " + frag[0].length + " " + frag.length);
-        for (int i = bi.getHeight() % 16; i < bi.getHeight(); i += 16) {
-            for (int j = bi.getWidth() % 16; j < bi.getWidth(); j += 16) {
+        for (int i = bi.getHeight() / 2; i < bi.getHeight(); i += 2) {
+            for (int j = bi.getWidth() % 2; j < bi.getWidth(); j += 2) {
                 compareFragHOG(i, j, bi);
             }
         }
@@ -230,8 +230,8 @@ public class MatchFrag {
         int buffMatch = 0;
 
 
-        for (int i = 0; i < height; i += 16) {
-            for (int j = 0; j < width; j += 16) {
+        for (int i = 0; i < height; i += 2) {
+            for (int j = 0; j < width; j += 2) {
 //                int argb = bi.getRGB(j, i);
 //                int alpha = (argb >> 24) & 0xff;
 //                int red = (argb >> 16) & 0xff;
@@ -255,11 +255,11 @@ public class MatchFrag {
         }
 //        System.out.println(buffMatch);
 
-//        if (buffMatch >= (frag.length * frag[0].length)/34) {
+        if (buffMatch >= 96) {
         match.add(buffMatch);
         xy.add(new Integer[]{x, y});
 //            System.out.println(match);
-//        }
+        }
     }
 
 

@@ -7,7 +7,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Grad {
-     BufferedImage bi;
+    BufferedImage bi;
 
     Grad(BufferedImage bi) {
         this.bi = bi;
@@ -19,6 +19,7 @@ public class Grad {
     public void gradGray() throws IOException {
         for (int i = 0; i < bi.getHeight(); i++) {
             for (int j = 0; j < bi.getWidth(); j++) {
+
                 int argb = bi.getRGB(j, i);
                 int alpha = (argb >> 24) & 0xff;
                 int red = (argb >> 16) & 0xff;
@@ -31,26 +32,26 @@ public class Grad {
         }
     }
 
-        public BufferedImage gradGray(BufferedImage bi) throws IOException {
+    public BufferedImage gradGray(BufferedImage bi) throws IOException {
         BufferedImage biN = new BufferedImage(bi.getWidth(), bi.getHeight(), BufferedImage.TYPE_INT_ARGB);
-            for (int i = 0; i < bi.getHeight(); i++) {
-                for (int j = 0; j < bi.getWidth(); j++) {
-                    int argb = bi.getRGB(j, i);
-                    int alpha = (argb >> 24) & 0xff;
-                    int red = (argb >> 16) & 0xff;
-                    int green = (argb >> 8) & 0xff;
-                    int blue = (argb) & 0xff;
+        for (int i = 0; i < bi.getHeight(); i++) {
+            for (int j = 0; j < bi.getWidth(); j++) {
+                int argb = bi.getRGB(j, i);
+                int alpha = (argb >> 24) & 0xff;
+                int red = (argb >> 16) & 0xff;
+                int green = (argb >> 8) & 0xff;
+                int blue = (argb) & 0xff;
 //                int grayRGB = (red * 77 + green * 150 + blue * 29 + 128) / 256;
-                    green = blue = red;
-                    biN.setRGB(j, i, (red << 16) | (green << 8) | blue);
-                }
+                green = blue = red;
+                biN.setRGB(j, i, (red << 16) | (green << 8) | blue);
             }
+        }
 //        File file = new File("gray_image5.png");
 //        if (!file.exists()) {
 //            file.createNewFile();
 //        }
 //        ImageIO.write(bi, "png", file);
-            return biN;
+        return biN;
     }
 
     public void gradientMap() throws IOException {
@@ -134,7 +135,7 @@ public class Grad {
         return biN;
     }
 
-    private  void setDirection(int x, int y, BufferedImage biN) {
+    private void setDirection(int x, int y, BufferedImage biN) {
 //        int argb1 =
         boolean flag = false;
         if ((y - 1) >= 0 && (bi.getRGB(y - 1, x) & 0xff) == 90) {
@@ -313,8 +314,8 @@ public class Grad {
 
 
     public void generalMap() throws IOException {
-        for (int i = 0; i < bi.getHeight(); i += 16) {
-            for (int j = 0; j < bi.getWidth(); j += 16) {
+        for (int i = 0; i < bi.getHeight(); i += 2) {
+            for (int j = 0; j < bi.getWidth(); j += 2) {
                 mainDirection(i, j);
             }
         }
@@ -326,8 +327,8 @@ public class Grad {
     }
 
     public BufferedImage generalMapImage() throws IOException {
-        for (int i = 0; i < bi.getHeight(); i += 16) {
-            for (int j = 0; j < bi.getWidth(); j += 16) {
+        for (int i = 0; i < bi.getHeight(); i += 2) {
+            for (int j = 0; j < bi.getWidth(); j += 2) {
                 mainDirection(i, j);
             }
         }
@@ -340,8 +341,8 @@ public class Grad {
     }
 
     public BufferedImage generalMapImage(BufferedImage bi) throws IOException {
-        for (int i = 0; i < bi.getHeight(); i += 16) {
-            for (int j = 0; j < bi.getWidth(); j += 16) {
+        for (int i = 0; i < bi.getHeight(); i += 2) {
+            for (int j = 0; j < bi.getWidth(); j += 2) {
                 mainDirection(i, j, bi);
             }
         }
@@ -356,8 +357,9 @@ public class Grad {
 
     private void mainDirection(int i, int j, BufferedImage bi) {
         int[] direct = new int[9];
-        for (int k = i; k < i + 16; k++) {
-            for (int c = j; c < j + 16; c++) {
+        for (int k = i; k < i + 2 && k < bi.getHeight(); k++) {
+            for (int c = j; c < j + 2 && c < bi.getWidth(); c++) {
+                System.out.println(bi.getWidth()+" "+k+" "+c+" "+bi.getHeight());
                 int argb = bi.getRGB(c, k);
                 int alpha = (argb >> 24) & 0xff;
                 int red = (argb >> 16) & 0xff;
@@ -403,8 +405,8 @@ public class Grad {
                 kk = k;
             }
         }
-        for (int k = i; k < i + 16; k++) {
-            for (int c = j; c < j + 16; c++) {
+        for (int k = i; k < i + 2 && k < bi.getHeight(); k++) {
+            for (int c = j; c < j + 2 && c < bi.getWidth(); c++) {
 //                System.out.println(max);
 //                if (max == 765) {
 //                    bi.setRGB(c, k, new Color(255, 255, 255).getRGB());
@@ -451,8 +453,10 @@ public class Grad {
     private void mainDirection(int i, int j) {
         int[] direct = new int[9];
 
-        for (int k = i; k < i + 16; k++) {
-            for (int c = j; c < j + 16; c++) {
+
+        for (int k = i; k < i + 2 && k < bi.getHeight(); k++) {
+            for (int c = j; c < j + 2 && c < bi.getWidth(); c++) {
+                System.out.println(bi.getWidth()+" "+k+" "+c+" "+bi.getHeight());
                 int argb = bi.getRGB(c, k);
                 int alpha = (argb >> 24) & 0xff;
                 int red = (argb >> 16) & 0xff;
@@ -500,8 +504,8 @@ public class Grad {
             }
         }
 
-        for (int k = i; k < i + 16; k++) {
-            for (int c = j; c < j + 16; c++) {
+        for (int k = i; k < i + 2 && k < bi.getHeight(); k++) {
+            for (int c = j; c < j + 2 && c < bi.getWidth(); c++) {
 //                System.out.println(max);
 //                if (max == 765) {
 //                    bi.setRGB(c, k, new Color(255, 255, 255).getRGB());

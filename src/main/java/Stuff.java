@@ -1,23 +1,48 @@
+import javax.imageio.ImageIO;
 import javax.xml.transform.sax.SAXSource;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Stuff {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        BufferedImage bi = ImageIO.read(new File("0021.png"));
+        Grad grad = new Grad(bi);
+        grad.gradGray();
+        grad.gradientMap();
+        BufferedImage bi1 = grad.generalMapImage();
+        File file = new File("ress.png");
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        ImageIO.write(bi1, "png", file);
+        MatchFrag mf = new MatchFrag(new File("frag16.png"));
+        mf.findMatchHOG(new File("ress.png"));
 
+//        int i = 1;
+//        System.out.println(1|1);
 //        Расстояние
-        double a = 6.05*Math.sqrt(3)/2;
-        double b = Math.sqrt(3*(5.26*5.26 + 2.96*2.96))/2;
-        double c = (a+b)/2;
-//        double r = 10.08*c/d;
-//        double d = 81/c;
-//        double f = 21.622/Math.tan(1.05/1.99);
-//        double g = 30./640;
-//        double angle = 21*g;
-//        double z = 21/Math.tan(angle*0.017);
-        System.out.println(a);
-        System.out.println(b);
-        System.out.println(c);
+//        double a = 6.05*Math.sqrt(3)/2;
+//        double b = Math.sqrt(3*(5.26*5.26 + 2.96*2.96))/2;
+//        double c = (a+b)/2;
+////        double r = 10.08*c/d;
+////        double d = 81/c;
+////        double f = 21.622/Math.tan(1.05/1.99);
+////        double g = 30./640;
+////        double angle = 21*g;
+////        double z = 21/Math.tan(angle*0.017);
+//        System.out.println(a);
+//        System.out.println(b);
+//        System.out.println(c);
+
+
+//
+//Scanner in = new Scanner(System.in);
+//int n = in.nextInt();
+//        ArrayList
+//
 
 //        String workingDir = System.getProperty("user.dir");
 //        System.out.println("Current working directory : " + workingDir);
@@ -103,7 +128,6 @@ public class Stuff {
 //        }
 //        return biN;
 //    }
-
 
 
 //    public BufferedImage findMatchHOG(BufferedImage bi) throws IOException {
