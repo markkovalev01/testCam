@@ -22,7 +22,7 @@ public class Grad {
                 int argb = bi.getRGB(j, i);
                 int alpha = (argb >> 24) & 0xff;
                 if (alpha != 255) {
-                    bi.setRGB(j, i, new Color(255,0,0).getRGB());
+                    bi.setRGB(j, i, new Color(255, 0, 0).getRGB());
                     continue;
                 }
                 int red = (argb >> 16) & 0xff;
@@ -43,7 +43,7 @@ public class Grad {
                 int argb = bi.getRGB(j, i);
                 int alpha = (argb >> 24) & 0xff;
                 if (alpha != 255) {
-                    bi.setRGB(j, i, new Color(255,0,0).getRGB());
+                    bi.setRGB(j, i, new Color(255, 0, 0).getRGB());
                     continue;
                 }
                 int red = (argb >> 16) & 0xff;
@@ -71,56 +71,7 @@ public class Grad {
             }
         }
 
-//        Thread th1 = new Thread(new Runnable() {
-//            public void run() {
-//                for (int i = 0; i < bi.getHeight(); i++) {
-//                    for (int j = 0; j < bi.getWidth()/2; j++) {
-//                        setDirection(i, j, biN);
-////                        System.out.println("next");
-////                        System.out.println(i + " " + j);
 //
-//                    }
-//                    try {
-//                        Thread.sleep(1);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                System.out.println("yes1");
-//            }
-//        });
-//
-//        th1.setPriority(Thread.MAX_PRIORITY);
-////
-//        Thread th2 = new Thread(new Runnable() {
-//            public void run() {
-//                for (int i = 0; i < bi.getHeight(); i++) {
-//                    for (int j = bi.getWidth() / 2; j < bi.getWidth(); j++) {
-//                        setDirection(i, j, biN);
-//
-//                    }
-//                    try {
-//                        Thread.sleep(1);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                System.out.println("yes2");
-//            }
-//        });
-//        th1.start();
-//        th2.start();
-//
-////        Thread th = Thread.currentThread();
-//        try {
-//            th1.join();
-//            th2.join();
-////            th.join();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        ReentrantLock locker = new ReentrantLock();
-//        Condition condition = locker.newCondition();
 
 //        setDirection(61, 172);
 //        System.out.println("done");
@@ -147,7 +98,7 @@ public class Grad {
 //        int argb1 =
         int argb = bi.getRGB(y, x);
         int alpha = (argb >> 24) & 0xff;
-        if (bi.getRGB(y,x)==-65536) {
+        if (bi.getRGB(y, x) == -65536) {
             biN.setRGB(y, x, new Color(255, 0, 0).getRGB());
             return;
         }
@@ -159,8 +110,8 @@ public class Grad {
         int grad = bi.getRGB(y, x) & 0xff;
 ////        System.out.println(grad);
 ////        System.out.println();
-        int buffI = 0;
-        int buffJ = 0;
+        int buffI = x;
+        int buffJ = y;
 
         for (int i = x - 1; i < x + 1; i++) {
             for (int j = y - 1; j < y + 1; j++) {
@@ -179,7 +130,7 @@ public class Grad {
                     continue;
                 }
 
-                if (bi.getRGB(j,i) == -65536) {
+                if (bi.getRGB(j, i) == -65536) {
                     continue;
                 }
                 if ((bi.getRGB(j, i) & 0xff) < grad) {
@@ -190,94 +141,8 @@ public class Grad {
             }
         }
 
-
-//        for (int d = i + 1; d > 0 && d > i - 2; d--) {
-//
-//            if (j + 1 >= bi.getWidth() && i + 1 >= bi.getHeight()) {
-//                d--;
-//                for (int k = j; k > j - 2 && k > 0; k--) {
-//                    int argb = bi.getRGB(k, d);
-//
-////            int alpha = (argb >> 24) & 0xff;
-//                    int red = (argb >> 16) & 0xff;
-////                    System.out.println();
-////            int green = (argb >> 8) & 0xff;
-////            int blue = (argb) & 0xff;
-//                    if (red < grad) {
-////                        System.out.println(red + " " + grad + " " + i + " " + j);
-//                        grad = red;
-//                        buffI = d;
-//                        buffJ = k;
-//                    }
-//                }
-//                continue;
-//            }
-//
-//
-//            if (j + 1 >= bi.getWidth()) {
-//                for (int k = j; k > j - 2 && k > 0; k--) {
-//                    int argb = bi.getRGB(k, d);
-////            int alpha = (argb >> 24) & 0xff;
-//                    int red = (argb >> 16) & 0xff;
-////            int green = (argb >> 8) & 0xff;
-////            int blue = (argb) & 0xff;
-//                    if (red < grad) {
-////                        System.out.println(red + " " + grad + " " + i + " " + j);
-//                        grad = red;
-//                        buffI = d;
-//                        buffJ = k;
-//                    }
-//                }
-//                continue;
-//            }
-//
-//
-//            if (i + 1 >= bi.getHeight()) {
-//                d--;
-//                for (int k = j + 1; k > j - 2 && k > 0; k--) {
-//                    int argb = bi.getRGB(k, d);
-////            int alpha = (argb >> 24) & 0xff;
-//                    int red = (argb >> 16) & 0xff;
-////            int green = (argb >> 8) & 0xff;
-////            int blue = (argb) & 0xff;
-//                    if (red < grad) {
-////                        System.out.println(red + " " + grad + " " + i + " " + j);
-//                        grad = red;
-//                        buffI = d;
-//                        buffJ = k;
-//                    }
-//                }
-//                continue;
-//            }
-//
-//            for (int k = j + 1; k > j - 2 && k > 0; k--) {
-//                int argb = bi.getRGB(k, d);
-//                if (k == (j - 1) && d==i && flag) {
-//                    System.out.println("yes");
-//                    continue;
-//                }
-////            int alpha = (argb >> 24) & 0xff;
-//                int red = (argb >> 16) & 0xff;
-////            int green = (argb >> 8) & 0xff;
-////            int blue = (argb) & 0xff;
-////                System.out.println(red + " " + grad + " " + i + " " + j);
-//                if (red < grad) {
-////                    System.out.println(red + " " + grad);
-//
-//                    grad = red;
-//                    buffI = d;
-//                    buffJ = k;
-//                }
-//            }
-//        }
-//        int a = (argb1 >> 16) & 0xff;
-
-//        if (x == 61 && y == 172) {
-////            System.out.println(buffI + " " + buffJ);
-//        }
-
         if (buffI == x && buffJ == y) {
-            biN.setRGB(y, x, new Color(255, 255, 255).getRGB());
+            biN.setRGB(y, x, new Color(0, 255, 0).getRGB());
 //            bi.setRGB(j, i, 0xffffff);
 //            System.out.println("--");
             return;
@@ -326,10 +191,9 @@ public class Grad {
         }
         if (buffI == x + 1 && buffJ == y) {
             biN.setRGB(y, x, new Color(0, 0, 180).getRGB());
-//            bi.setRGB(j, i, -16776180);
-//            System.out.println(180);
             return;
         }
+        System.out.println(buffI + " " + buffJ + " " + x + " " + y);
 
     }
 
@@ -633,4 +497,73 @@ public class Grad {
 ////        ImageIO.write(bi1, "png", file);
 ////
 //    }
+
+    public void binarization() {
+        final BufferedImage biN = new BufferedImage(bi.getWidth(), bi.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Color color = new Color(255, 255, 255);
+        Color color1 = new Color(0, 0, 0);
+        for (int i = 0; i < bi.getHeight(); i++) {
+            for (int j = 0; j < bi.getWidth(); j++) {
+
+                if (bi.getRGB(j, i) == -65536) {
+                    biN.setRGB(j, i, -65536);
+                    continue;
+                }
+                if (((bi.getRGB(j, i) >> 16) & 0xff) >= 232) {
+                    biN.setRGB(j, i, color.getRGB());
+                    continue;
+                }
+                biN.setRGB(j, i, color1.getRGB());
+            }
+        }
+        bi = biN;
+    }
+
+    public void contrastMap(int limit, int l) {
+        for (int i = 0; i < bi.getWidth(); i += l) {
+            for (int j = 0; j < bi.getHeight(); j += l) {
+                if (bi.getRGB(i, j) == -65536) {
+                    continue;
+                }
+                localcontrast(i, j, limit, l);
+            }
+        }
+
+    }
+
+    private void localcontrast(int x, int y, int limit, int l) {
+        int max = 0;
+        int min = 255;
+        Color color = new Color(0);
+        for (int i = x; i < x + l && i < bi.getWidth(); i++) {
+            for (int j = y; j < y + l && j < bi.getHeight(); j++) {
+
+                if (bi.getRGB(i, j) == -65536) {
+                    continue;
+                }
+                if (((bi.getRGB(i, j) >> 16) & 0xff) <= min) {
+                    min = (bi.getRGB(i, j) >> 16) & 0xff;
+//                    continue;
+                }
+                if (((bi.getRGB(i, j) >> 16) & 0xff) >= max) {
+                    max = (bi.getRGB(i, j) >> 16) & 0xff;
+//                    continue;
+                }
+            }
+        }
+        if(min ==0){
+            min++;
+        }
+        if ( max / min < limit) {
+            color = new Color(255, 255, 255);
+        }
+        for (int i = x; i < x + l && i < bi.getWidth(); i++) {
+            for (int j = y; j < y + l && j < bi.getHeight(); j++) {
+                if (bi.getRGB(i, j) == -65536) {
+                    continue;
+                }
+                bi.setRGB(i, j, color.getRGB());
+            }
+        }
+    }
 }

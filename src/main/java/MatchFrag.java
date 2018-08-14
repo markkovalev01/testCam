@@ -174,10 +174,34 @@ public class MatchFrag {
         if (!res.exists()) {
             file.createNewFile();
         }
-        for (int k = 0; k < xy.size(); k++) {
+        int buff = 0;
+        int buffI = 0;
+        int buffJ = 0;
+
+        for (int k = 0; k < match.size(); k++) {
 //            System.out.println(xy.get(k)[0]+" "+ xy.get(k)[1]);
-            bi.setRGB(xy.get(k)[1], xy.get(k)[0], new Color(250, 250, 0).getRGB());
+//            bi.setRGB(xy.get(k)[1], xy.get(k)[0], new Color(250, 250, 0).getRGB());
+
+            if (match.get(k) >= buff) {
+//                System.out.println(buffI + " " + buffJ);
+
+                buff = match.get(k);
+                buffI = xy.get(k)[1];
+                buffJ = xy.get(k)[0];
+            }
+
         }
+//        System.out.println(buff);
+
+//        for (int k = 0; k < xy.size(); k++) {
+        System.out.println(buffI + " " + buffJ);
+        bi.setRGB(buffI, buffJ, new Color(250, 250, 0).getRGB());
+//        for (int k = 0; k < xy.size(); k++) {
+//            System.out.println(xy.get(k)[0]+" "+ xy.get(k)[1]);
+//            if(xy.get(k)[1]>300 && xy.get(k)[0]>155 ){
+//            bi.setRGB(xy.get(k)[1], xy.get(k)[0], new Color(250, 250, 0).getRGB());
+//            }
+//        }
         ImageIO.write(bi, "png", res);
 
     }
@@ -211,13 +235,14 @@ public class MatchFrag {
             }
 
         }
-        System.out.println(buff);
+//        System.out.println(buff);
 
 //        for (int k = 0; k < xy.size(); k++) {
             bi.setRGB(buffI, buffJ, new Color(250, 250, 0).getRGB());
 //        }
         prefX = buffI;
         prefY = buffJ;
+
 
         return bi;
 //        ImageIO.write(bi, "png", res);
@@ -257,10 +282,10 @@ public class MatchFrag {
         }
 //        System.out.println(buffMatch);
 
-        if (buffMatch >= 110) {
+        if (buffMatch >=0) {
             match.add(buffMatch);
             xy.add(new Integer[]{x, y});
-            System.out.println(match);
+//            System.out.println(match);
         }
     }
 

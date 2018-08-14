@@ -9,41 +9,47 @@ import java.util.Scanner;
 
 public class Stuff {
     public static void main(String[] args) throws IOException {
-        BufferedImage bi = ImageIO.read(new File("0021.png"));
+        BufferedImage bi = ImageIO.read(new File("1184.png"));
         Grad grad = new Grad(bi);
         grad.gradGray();
-        grad.gradientMap();
-//        BufferedImage bi1 = grad.generalMapImage();
-        File file = new File("ress3.png");
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-//        System.out.println(bi.getRGB(0,0));
-        ImageIO.write(grad.bi, "png", file);
+        grad.contrastMap(8, 5);
+//        grad.gradientMap();
+//        grad.binarization();
+////        BufferedImage bi1 = grad.generalMapImage();
+//        File file = new File("ress3.png");
+//        if (!file.exists()) {
+//            file.createNewFile();
+//        }
+////        System.out.println(bi.getRGB(0,0));
+        ImageIO.write(grad.bi, "png", new File("result.png"));
 //        Frag frag = new Frag();
-//        frag.makeFrag(ImageIO.read(file),451, 164, 60,10, new File("frag17.png"));
-        MatchFrag mf = new MatchFrag(new File("frag17.png"));
-//        BufferedImage bi = ImageIO.read(new File("ress2.png"));
-        File file1 = new File("matchRess.png");
-        if (!file1.exists()) {
-            file1.createNewFile();
-        }
-        mf.findMatchHOG(file);
-
-        bi = ImageIO.read(new File("0001.png"));
-        BufferedImage bi1 = ImageIO.read(new File("findFragHOG2.png"));
-        int color = new Color(250, 250, 0).getRGB();
-
-        for (int i = 0; i < bi.getHeight(); i++) {
-            for (int j = 0; j < bi.getWidth(); j++) {
-                if (bi1.getRGB(j,i) == color){
-                    bi.setRGB(j,i,color);
-                }
-            }
-        }
-
-        File res = new File("matchRess.png");
-        ImageIO.write(bi,"png",res);
+////        File fr = new File("frag18.png");
+////        if (!fr.exists()) {
+////            fr.createNewFile();
+////        }
+////        frag.makeFrag(ImageIO.read(file), 450, 189, 26, 16, new File("frag18.png"));
+//        MatchFrag mf = new MatchFrag(new File("frag18.png"));
+////        BufferedImage bi = ImageIO.read(new File("ress2.png"));
+//        File file1 = new File("matchRess.png");
+//        if (!file1.exists()) {
+//            file1.createNewFile();
+//        }
+//        mf.findMatchHOG(file);
+//
+//        bi = ImageIO.read(new File("0001.png"));
+//        BufferedImage bi1 = ImageIO.read(new File("findFragHOG2.png"));
+//        int color = new Color(250, 250, 0).getRGB();
+//
+//        for (int i = 0; i < bi.getHeight(); i++) {
+//            for (int j = 0; j < bi.getWidth(); j++) {
+//                if (bi1.getRGB(j, i) == color) {
+//                    bi.setRGB(j, i, color);
+//                }
+//            }
+//        }
+//
+//        File res = new File("matchRess.png");
+//        ImageIO.write(bi, "png", res);
 
 //        int x = 0;
 //        int y = 0;
